@@ -60,7 +60,7 @@ const DesktopNavbar = ({ className }: { className: string }) => {
               ?
               <UserProfile />
               :
-              <button tabIndex={0} className="btn btn-primary">LOGIN</button>
+              <Link href="/login" tabIndex={0} className="btn btn-primary">LOGIN</Link>
           }
         </div>
       </div>
