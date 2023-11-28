@@ -14,7 +14,7 @@ const UserProfile = ({ src }: { src: string }) => {
       </label>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
         <li>
-          <Link href="app/users/me" className="justify-between">
+          <Link href="/app/users/me" className="justify-between">
             Profile
             <span className="badge">New</span>
           </Link>
@@ -63,7 +63,7 @@ const DesktopNavbar = ({ className }: { className: string }) => {
               ?
               <UserProfile src={user?.picture} />
               :
-              <Link href="api/auth/login" tabIndex={0} className="btn btn-primary">LOGIN</Link>
+              <Link href="/api/auth/login" tabIndex={0} className="btn btn-primary">LOGIN</Link>
           }
         </div>
       </div>

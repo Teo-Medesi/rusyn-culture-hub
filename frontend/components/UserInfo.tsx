@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import Link from 'next/link'
 
 const UserInfo = ({ user }: any) => {
   return (
@@ -51,11 +52,11 @@ const UserInfo = ({ user }: any) => {
               <p className="font-light leading-relaxed text-slate-600 mb-4">
                 {user?.description || "No description added."}
               </p>
-              <button
+              <Link href="/app/users/me/posts/create-new"
                 className="font-normal btn btn-secondary"
               >
-                Follow Account
-              </button>
+                create new post
+              </Link>
             </div>
           </div>
         </div>

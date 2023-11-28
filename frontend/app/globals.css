@@ -9,3 +9,7 @@ input {
 .btn {
   @apply uppercase font-semibold;
 }
+
+.select {
+  @apply outline-none;
+}
