@@ -1,23 +1,26 @@
+"use client";
+import logo from "@/public/logo.svg"
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react"
+import { useUser } from "@auth0/nextjs-auth0/client"
 
-const UserProfile = () => {
+const UserProfile = ({ src }: { src: string }) => {
   return (
     <>
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img alt="My Profile" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg" />
+          <img alt="My Profile" src={src || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"} />
         </div>
       </label>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
         <li>
-          <a className="justify-between">
+          <Link href="app/users/me" className="justify-between">
             Profile
             <span className="badge">New</span>
-          </a>
+          </Link>
         </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><Link href="#">Settings</Link></li>
+        <li><Link href="api/auth/logout">Logout</Link></li>
       </ul>
     </>
 
@@ -25,12 +28,12 @@ const UserProfile = () => {
 }
 
 const DesktopNavbar = ({ className }: { className: string }) => {
-  const { user }: any = {};
+  const { user, error, isLoading }: any = useUser();
 
   return (
-    <div className="navbar bg-base-100">
+    <div className={`${className} navbar bg-base-100`}>
       <div className="flex-1">
-        <Link href="/" className="btn btn-ghost text-xl">RCH</Link>
+        <Link href="/" className=""><Image className="w-12 aspect-square" src={logo} alt="logo" /></Link>
         <ul className="menu menu-horizontal">
           <li>
             <Link href="/">Home</Link>
@@ -58,9 +61,9 @@ const DesktopNavbar = ({ className }: { className: string }) => {
           {
             user
               ?
-              <UserProfile />
+              <UserProfile src={user?.picture} />
               :
-              <Link href="/login" tabIndex={0} className="btn btn-primary">LOGIN</Link>
+              <Link href="api/auth/login" tabIndex={0} className="btn btn-primary">LOGIN</Link>
           }
         </div>
       </div>
