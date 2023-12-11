@@ -16,7 +16,7 @@ const FileInput = ({ name, onChange, maxFileSize }: FileInput) => {
       </label>
       <input
         type="file"
-        className="file-input file-input-bordered w-full mt-2"
+        className="file-input file-input-secondary file-input-bordered w-full mt-2"
       />
     </>
   )

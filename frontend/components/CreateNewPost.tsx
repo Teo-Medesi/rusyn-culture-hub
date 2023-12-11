@@ -38,25 +38,12 @@ const CreateNewPost = () => {
           <FileInput name="Sheet Music" onChange={() => { }} />
         </form>
       </div>
-      <div className="pb-4 justify-center flex-col items-center mt-2 sm:mt-8 flex">
+      <div className="pb-4 justify-center flex-col items-end mt-2 sm:mt-8 flex">
         <div className="flex gap-2 justify-center">
-          <button
-            className="
-            btn 
-            max-w-1/3
-            w-full
-            btn-primary
-          ">
+          <button className="btn btn-primary">
             Post
           </button>
-          <button
-            className="
-            btn
-            max-w-1/3
-            w-full
-            btn-accent
-            btn-outline
-          ">
+          <button className=" btn btn-accent btn-outline">
             Save Draft
           </button>
         </div>
