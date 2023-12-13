@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { SelectInput, TextInput, Option, TextAreaInput, FileInput } from "./forms";
+import { SelectInput, TextInput, Option, TextAreaInput, FileInput, TagsInput } from "./forms";
 
 const CreateNewPost = () => {
   const [tags, setTags] = useState<string[]>([]);
@@ -36,6 +36,7 @@ const CreateNewPost = () => {
           <TextAreaInput name="Lyrics" onChange={(event) => setLyrics((event.target as HTMLInputElement).value)} placeholder="Ей, Нє видно тот мой валал..." />
           <TextInput name="External Links" placeholder="" onChange={() => { }} />
           <FileInput name="Sheet Music" onChange={() => { }} />
+          <TagsInput tags={tags} onNewTag={(tag) => setTags(current => [...current, tag])} onTagDelete={(tag) => setTags(tags.filter(element => element != tag))} />
         </form>
       </div>
       <div className="pb-4 justify-center flex-col items-end mt-2 sm:mt-8 flex">
