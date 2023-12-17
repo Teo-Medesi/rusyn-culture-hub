@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_KEY,
   authDomain: "rusyn-culture-hub.firebaseapp.com",
   projectId: "rusyn-culture-hub",
   storageBucket: "rusyn-culture-hub.appspot.com",

@@ -60,7 +60,7 @@ const DesktopNavbar = ({ className, user }: { className: string, user: any }) =>
               ?
               <UserProfile src={user?.picture} />
               :
-              <Link href="/api/auth/login" tabIndex={0} className="btn btn-primary">LOGIN</Link>
+              <Link href="/auth/sign-in" tabIndex={0} className="btn btn-primary">LOGIN</Link>
           }
         </div>
       </div>
