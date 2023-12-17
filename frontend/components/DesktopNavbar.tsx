@@ -2,7 +2,6 @@
 import logo from "@/public/logo.svg"
 import Image from "next/image";
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0/client"
 
 const UserProfile = ({ src }: { src: string }) => {
   return (
@@ -27,9 +26,7 @@ const UserProfile = ({ src }: { src: string }) => {
   )
 }
 
-const DesktopNavbar = ({ className }: { className: string }) => {
-  const { user, error, isLoading }: any = useUser();
-
+const DesktopNavbar = ({ className, user }: { className: string, user: any }) => {
   return (
     <div className={`${className} navbar bg-base-100`}>
       <div className="flex-1">
