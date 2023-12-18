@@ -1,9 +1,12 @@
 "use client";
+import { auth } from "@/firebase.config";
 import logo from "@/public/logo.svg"
+import { MultiFactorUser, User } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
-const UserProfile = ({ src }: { src: string }) => {
+const UserProfile = ({ src }: { src: string | null }) => {
   return (
     <>
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -26,7 +29,12 @@ const UserProfile = ({ src }: { src: string }) => {
   )
 }
 
-const DesktopNavbar = ({ className, user }: { className: string, user: any }) => {
+const DesktopNavbar = ({ className, user }: { className: string, user: User | null }) => {
+  useEffect(() => {
+    console.log(user)
+    console.log(auth.currentUser)
+  }, [user])
+
   return (
     <div className={`${className} navbar bg-base-100`}>
       <div className="flex-1">
@@ -58,7 +66,7 @@ const DesktopNavbar = ({ className, user }: { className: string, user: any }) =>
           {
             user
               ?
-              <UserProfile src={user?.picture} />
+              <UserProfile src={user?.photoURL} />
               :
               <Link href="/auth/sign-in" tabIndex={0} className="btn btn-primary">LOGIN</Link>
           }

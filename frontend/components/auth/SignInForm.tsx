@@ -1,20 +1,38 @@
 "use client";
 import Image from 'next/image';
 import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
 import { TextInput } from "../forms";
-import { signInWithEmailAndPassword } from "@firebase/auth";
-import { auth } from "@/firebase.config"
+import { signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
+import { auth, provider } from "@/firebase.config"
+import { GoogleButton } from '.';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { MouseEvent } from 'react';
 
 const SignIn = ({ logo }: { logo: string }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  const handleSignIn = (credentials: { email: string, password: string }) => {
+  const router = useRouter();
+
+  const handleSignIn = (credentials: { email: string, password: string }, event: MouseEvent<HTMLButtonElement>) => {
+    event?.preventDefault();
+
     if (email && password) {
-      signInWithEmailAndPassword(auth, email, password);
+      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        router.push("/");
+      }).catch((error) => {
+        setError(error.message);
+      });
     }
   }
+
+  // TO-DO: Add Google Sign In with Redirect for Mobile Users! Pop Up is not Prefferable for Mobile!
+  const handleGoogleSignIn = () => {
+    signInWithPopup(auth, provider);
+  }
+
   return (
     <div>
       <section className="bg-base-100">
@@ -37,6 +55,9 @@ const SignIn = ({ logo }: { logo: string }) => {
               <form className="" action="#">
                 <TextInput type='email' name='Email' placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} />
                 <TextInput type='password' name='Password' placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+
+                {error && <p className="text-error italic">{error}</p>}
+
                 <div className="flex items-center mt-4 justify-between">
                   <div className="flex items-start">
                     <div className="flex items-center h-5">
@@ -61,19 +82,20 @@ const SignIn = ({ logo }: { logo: string }) => {
                     Forgot password?
                   </a>
                 </div>
-                <button type="submit" className="w-full btn mt-4 btn-primary">
+                <button onClick={handleSignIn} className="w-full btn mt-4 btn-primary">
                   Sign in
                 </button>
                 <p className="text-sm mt-4 font-light text-gray-500">
                   Don’t have an account yet?{" "}
-                  <a
-                    href="#"
+                  <Link
+                    href="/auth/sign-up"
                     className="font-medium text-primary-600 hover:underline"
                   >
                     Sign up
-                  </a>
+                  </Link>
                 </p>
-                <div className='!h-[1px] bg-gray-500 mt-4 w-full '></div>
+                <div className='!h-[1px] bg-gray-500 mt-6 w-full'></div>
+                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={handleGoogleSignIn} /></div>
               </form>
             </div>
           </div>

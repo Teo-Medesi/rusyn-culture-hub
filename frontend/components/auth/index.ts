@@ -1,4 +1,5 @@
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
+import GoogleButton from "./GoogleButton";
 
-export { SignInForm, SignUpForm };
+export { SignInForm, GoogleButton, SignUpForm };
