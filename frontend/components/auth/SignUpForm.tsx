@@ -16,27 +16,30 @@ const SignUp = ({ logo }: { logo: string }) => {
 
   const router = useRouter();
 
-  const handleSignUp = (credentials: { email: string, password: string }, event: MouseEvent<HTMLButtonElement>) => {
+  const handleSignUp = (event: any) => {
     event.preventDefault();
 
     if (email && password) {
-
-      console.log(credentials);
+      router.prefetch("/app");
 
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        // Signed in
-        console.log(userCredential)
-        console.log("succes")
-        router.push("/");
-      }).catch((error) => {
-        setError(error.message);
-      });
+        router.push("/app")
+      })
+        .catch((error) => {
+          setError(error.message);
+        });
+
     }
   }
 
   // TO-DO: Add Google Sign In with Redirect for Mobile Users! Pop Up is not Prefferable for Mobile!
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, provider);
+  const handleGoogleSignIn = (event: any) => {
+    event.preventDefault();
+    router.prefetch("/app");
+
+    signInWithPopup(auth, provider).then(() => {
+      router.push("/app");
+    });
   }
 
   return (
@@ -88,7 +91,7 @@ const SignUp = ({ logo }: { logo: string }) => {
                     Forgot password?
                   </a>
                 </div>
-                <button onClick={handleSignUp} className="w-full btn mt-4 btn-primary">
+                <button onClick={(event) => handleSignUp(event)} className="w-full btn mt-4 btn-primary">
                   Sign Up
                 </button>
                 <p className="text-sm mt-4 font-light text-gray-500">
@@ -101,7 +104,7 @@ const SignUp = ({ logo }: { logo: string }) => {
                   </Link>
                 </p>
                 <div className='!h-[1px] bg-gray-500 mt-6 w-full'></div>
-                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={handleGoogleSignIn} /></div>
+                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={(event) => handleGoogleSignIn(event)} /></div>
               </form>
             </div>
           </div>

@@ -1,17 +1,17 @@
 "use client";
 import { auth } from "@/firebase.config";
 import logo from "@/public/logo.svg"
-import { MultiFactorUser, User } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
-const UserProfile = ({ src }: { src: string | null }) => {
+const UserProfile = ({ src, handleLogout }: { src: string | null | undefined, handleLogout: () => Promise<void> }) => {
   return (
     <>
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img alt="My Profile" src={src || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"} />
+          <Image alt="My Profile" className="w-full" src={src || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"} />
         </div>
       </label>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -22,18 +22,20 @@ const UserProfile = ({ src }: { src: string | null }) => {
           </Link>
         </li>
         <li><Link href="#">Settings</Link></li>
-        <li><Link href="api/auth/logout">Logout</Link></li>
+        <li><Link href="#" onClick={handleLogout}>Logout</Link></li>
       </ul>
     </>
 
   )
 }
 
-const DesktopNavbar = ({ className, user }: { className: string, user: User | null }) => {
-  useEffect(() => {
-    console.log(user)
-    console.log(auth.currentUser)
-  }, [user])
+const DesktopNavbar = ({ className }: { className: string }) => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.refresh();
+  }
 
   return (
     <div className={`${className} navbar bg-base-100`}>
@@ -64,9 +66,9 @@ const DesktopNavbar = ({ className, user }: { className: string, user: User | nu
         </div>
         <div className="dropdown dropdown-end">
           {
-            user
+            auth?.currentUser
               ?
-              <UserProfile src={user?.photoURL} />
+              <UserProfile handleLogout={handleLogout} src={auth.currentUser.photoURL} />
               :
               <Link href="/auth/sign-in" tabIndex={0} className="btn btn-primary">LOGIN</Link>
           }

@@ -16,12 +16,14 @@ const SignIn = ({ logo }: { logo: string }) => {
 
   const router = useRouter();
 
-  const handleSignIn = (credentials: { email: string, password: string }, event: MouseEvent<HTMLButtonElement>) => {
-    event?.preventDefault();
+  const handleSignIn = (event: any) => {
+    event.preventDefault();
 
     if (email && password) {
+      router.prefetch("/app");
+
       signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        router.push("/");
+        router.push("/app");
       }).catch((error) => {
         setError(error.message);
       });
@@ -29,8 +31,13 @@ const SignIn = ({ logo }: { logo: string }) => {
   }
 
   // TO-DO: Add Google Sign In with Redirect for Mobile Users! Pop Up is not Prefferable for Mobile!
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, provider);
+  const handleGoogleSignIn = (event: any) => {
+    event.preventDefault();
+    router.prefetch("/app");
+
+    signInWithPopup(auth, provider).then(() => {
+      router.push("/app");
+    });
   }
 
   return (
@@ -82,7 +89,7 @@ const SignIn = ({ logo }: { logo: string }) => {
                     Forgot password?
                   </a>
                 </div>
-                <button onClick={handleSignIn} className="w-full btn mt-4 btn-primary">
+                <button onClick={(event) => handleSignIn(event)} className="w-full btn mt-4 btn-primary">
                   Sign in
                 </button>
                 <p className="text-sm mt-4 font-light text-gray-500">
@@ -95,7 +102,7 @@ const SignIn = ({ logo }: { logo: string }) => {
                   </Link>
                 </p>
                 <div className='!h-[1px] bg-gray-500 mt-6 w-full'></div>
-                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={handleGoogleSignIn} /></div>
+                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={(event) => handleGoogleSignIn(event)} /></div>
               </form>
             </div>
           </div>
