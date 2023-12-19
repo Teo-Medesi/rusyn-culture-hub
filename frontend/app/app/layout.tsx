@@ -5,6 +5,7 @@ import { getUser } from '@/utils';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getUser();
+  console.log("got user on layout")
 
   return (
     <main>

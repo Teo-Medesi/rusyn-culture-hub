@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, signOut } from "firebase/auth";
 import { auth } from "@/firebase.config";
-import { signUserOut } from "@/utils";
+import { revalidate, signUserOut } from "@/utils";
+import { useEffect } from "react";
 
 const UserProfile = ({ src, handleSignOut }: { src: string | null | undefined, handleSignOut: () => Promise<void> }) => {
   return (
@@ -39,6 +40,10 @@ const DesktopNavbar = ({ className, user }: DesktopNavbar) => {
   const handleSignOut = async () => {
     await signUserOut();
   }
+
+  useEffect(() => {
+    console.log("USER EVENT", user)
+  }, [user])
 
   return (
     <div className={`${className} navbar bg-base-100`}>

@@ -1,13 +1,19 @@
 "use server";
 
-import { User, signOut } from "firebase/auth";
+import { User, signOut, revokeAccessToken } from "firebase/auth";
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 import { auth } from "@/firebase.config";
 import { revalidatePath } from "next/cache";
 
 const getUser = async (): Promise<User | null> => {
-  const token = cookies().get("sb-allqdhvtvglimqphvaat-auth-token");
+  const cookieList = cookies().getAll();
+
+  const token = cookieList.find(
+    (cookie) =>
+      cookie.name.includes("auth-token") &&
+      !cookie.name.includes("code-verifier")
+  );
 
   if (token) {
     const user = jwtDecode(token?.value);
@@ -18,9 +24,10 @@ const getUser = async (): Promise<User | null> => {
 };
 
 const signUserOut = async (): Promise<void> => {
+  console.log("signed out");
   await signOut(auth);
-  console.log("bruh");
-  revalidatePath("/app");
+
+  revalidatePath("/");
 };
 
 export { getUser, signUserOut };
