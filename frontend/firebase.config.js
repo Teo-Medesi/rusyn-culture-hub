@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage"
 import { getFirestore } from "firebase/firestore"
-import { getAuth } from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -19,6 +19,10 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+onAuthStateChanged(auth, (user) => {
+  console.log("auth observer", user)
+});
 
 export {
   app,

@@ -1,8 +1,8 @@
 import { UserInfo } from "@/components";
-import { getSession } from "@auth0/nextjs-auth0";
+import { auth } from "@/firebase.config";
 
 export default async function Me() {
-  const { user }: any = await getSession();
+  const user = auth.currentUser;
 
   return (
     <div className="h-full flex items-center">
