@@ -1,13 +1,12 @@
 "use client";
-import { auth } from "@/firebase.config";
 import logo from "@/public/logo.svg"
 import Image from "next/image";
 import Link from "next/link";
-import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { User, signOut } from "firebase/auth";
+import { auth } from "@/firebase.config";
+import { signUserOut } from "@/utils";
 
-const UserProfile = ({ src, handleLogout }: { src: string | null | undefined, handleLogout: () => Promise<void> }) => {
+const UserProfile = ({ src, handleSignOut }: { src: string | null | undefined, handleSignOut: () => Promise<void> }) => {
   return (
     <>
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -23,26 +22,23 @@ const UserProfile = ({ src, handleLogout }: { src: string | null | undefined, ha
           </Link>
         </li>
         <li><Link href="#">Settings</Link></li>
-        <li><Link href="#" onClick={handleLogout}>Logout</Link></li>
+        <li><Link href="#" onClick={handleSignOut}>Logout</Link></li>
       </ul>
     </>
 
   )
 }
 
-const DesktopNavbar = ({ className }: { className: string }) => {
-  const [user, setUser] = useState<any>(null);
+interface DesktopNavbar {
+  className: string;
+  user: User | null | undefined;
+}
 
-  const router = useRouter();
+const DesktopNavbar = ({ className, user }: DesktopNavbar) => {
 
-  const handleLogout = async () => {
-    setUser(null);
-    await signOut(auth);
+  const handleSignOut = async () => {
+    await signUserOut();
   }
-
-  useEffect(() => {
-    if (auth.currentUser) setUser(auth.currentUser);
-  }, [auth.currentUser])
 
   return (
     <div className={`${className} navbar bg-base-100`}>
@@ -75,7 +71,7 @@ const DesktopNavbar = ({ className }: { className: string }) => {
           {
             user
               ?
-              <UserProfile handleLogout={handleLogout} src={user.photoURL} />
+              <UserProfile handleSignOut={handleSignOut} src={user.photoURL} />
               :
               <Link href="/auth/sign-in" tabIndex={0} className="btn btn-primary">SIGN IN</Link>
           }
