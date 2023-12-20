@@ -3,8 +3,8 @@ import logo from "@/public/logo.svg"
 import Image from "next/image";
 import Link from "next/link";
 import { User, signOut } from "firebase/auth";
-import { auth } from "@/firebase.config";
-import { revalidate, signUserOut } from "@/utils";
+import { auth } from "@/firebase/firebase.config";
+import { signUserOut } from "@/utils";
 import { useEffect } from "react";
 
 const UserProfile = ({ src, handleSignOut }: { src: string | null | undefined, handleSignOut: () => Promise<void> }) => {
@@ -38,6 +38,10 @@ interface DesktopNavbar {
 const DesktopNavbar = ({ className, user }: DesktopNavbar) => {
 
   const handleSignOut = async () => {
+    // sign user out on the client
+    await signOut(auth);
+
+    // handle user sign out logic on the server
     await signUserOut();
   }
 

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useState } from "react";
 import { TextInput } from "../forms";
 import { createUserWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
-import { auth, provider } from "@/firebase.config"
+import { auth, provider } from "@/firebase/firebase.config"
 import { GoogleButton } from '.';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
