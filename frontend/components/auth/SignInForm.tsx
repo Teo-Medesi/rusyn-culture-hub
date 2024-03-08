@@ -2,12 +2,18 @@
 import Image from 'next/image';
 import { useState } from "react";
 import { TextInput } from "../forms";
-import { signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
+import { signInWithEmailAndPassword, signInWithRedirect, getRedirectResult } from "@firebase/auth";
 import { auth, provider } from "@/firebase.config"
 import { GoogleButton } from '.';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { MouseEvent } from 'react';
+import { useEffect } from 'react';
+
+/* 
+  https://www.chromium.org/developers/design-documents/create-amazing-password-forms/
+  optimize forms to follow guidelines
+*/ 
 
 const SignIn = ({ logo }: { logo: string }) => {
   const [email, setEmail] = useState<string>("");
@@ -15,6 +21,24 @@ const SignIn = ({ logo }: { logo: string }) => {
   const [error, setError] = useState<string>("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (auth) {
+      handleRedirect();
+    }
+  }, [auth])
+
+  const handleRedirect = async () => {
+    console.log("handle redirect")
+    
+    router.prefetch("/app");
+    const result = await getRedirectResult(auth);
+
+    if (result) {
+      router.push("/app");
+    }
+
+  }
 
   const handleSignIn = (event: any) => {
     event.preventDefault();
@@ -33,11 +57,8 @@ const SignIn = ({ logo }: { logo: string }) => {
   // TO-DO: Add Google Sign In with Redirect for Mobile Users! Pop Up is not Prefferable for Mobile!
   const handleGoogleSignIn = (event: any) => {
     event.preventDefault();
-    router.prefetch("/app");
-
-    signInWithPopup(auth, provider).then(() => {
-      router.push("/app");
-    });
+    
+    signInWithRedirect(auth, provider);
   }
 
   return (

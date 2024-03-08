@@ -20,10 +20,6 @@ const storage = getStorage(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-onAuthStateChanged(auth, (user) => {
-  console.log("auth observer", user)
-});
-
 export {
   app,
   db,
