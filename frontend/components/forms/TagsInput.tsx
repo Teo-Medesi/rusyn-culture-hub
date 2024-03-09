@@ -1,17 +1,9 @@
 "use client";
 import React from "react";
-import { IoMdClose } from "react-icons/io";
 import { useState, useRef } from "react";
-import type { KeyboardEvent, MouseEventHandler } from "react";
-
-const Tag = ({ text, onDelete }: { text: string, onDelete: MouseEventHandler }) => {
-  return (
-    <div onClick={onDelete} className="badge badge-primary p-4 flex items-center justify-center gap-2 cursor-pointer">
-      <p>{text}</p>
-      <IoMdClose />
-    </div>
-  )
-}
+import type { KeyboardEvent } from "react";
+import { MouseEventHandler } from "react";
+import { IoMdClose } from "react-icons/io"; 
 
 interface TagsInput {
   placeholder?: string;
@@ -19,6 +11,15 @@ interface TagsInput {
   tags: string[];
   onNewTag: (tag: string) => void;
   onTagDelete: (tag: string) => void;
+}
+
+const Tag = ({ text, onDelete }: { text: string, onDelete: MouseEventHandler }) => {
+    return (
+        <div onClick={onDelete} className="badge badge-primary p-4 flex items-center justify-center gap-2 cursor-pointer">
+            <p>{text}</p>
+            <IoMdClose />
+        </div>
+    )
 }
 
 const TagsInput = ({ placeholder, name, tags, onNewTag, onTagDelete }: TagsInput) => {

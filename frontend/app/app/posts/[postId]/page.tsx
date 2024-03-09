@@ -1,7 +1,5 @@
-export default function Post({ params }: { params: { postId: string } }) {
-    return (
-        <div>
-            post: {params.postId}
-        </div>
-    )
+import Post from "@/components/Post";
+
+export default function PostPage({ params }: { params: { postId: string } }) {
+    return <Post postId={params.postId} />
 }
