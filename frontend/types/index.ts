@@ -1,6 +1,7 @@
 
 
 interface Post {
+    id?: string;
     songTitle: string;
     region: string;
     lyrics: string;

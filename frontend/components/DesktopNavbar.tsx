@@ -53,19 +53,19 @@ const DesktopNavbar = ({ className }: { className: string }) => {
         <Link href="/" className=""><Image className="w-12 aspect-square" src={logo} alt="logo" /></Link>
         <ul className="menu menu-horizontal">
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/app/">Home</Link>
           </li>
           <li>
-            <Link href="/discover">Discover</Link>
+            <Link href="/app/discover">Discover</Link>
           </li>
           <li>
-            <Link href="/blog">Blog</Link>
+            <Link href="/app/blog">Blog</Link>
           </li>
           <li>
-            <Link href="/forum">Forum</Link>
+            <Link href="/app/forum">Forum</Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link>
+            <Link href="/app/contact">Contact</Link>
           </li>
 
         </ul>

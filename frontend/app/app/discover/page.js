@@ -1,5 +1,5 @@
-export default async function Discover() {
-  return (
-    <div></div>
-  )
+import Discover from "@/components/Discover";
+
+export default async function DiscoverPage() {
+  return <Discover />
 }
