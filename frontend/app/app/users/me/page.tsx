@@ -1,12 +1,17 @@
-import { UserInfo } from "@/components";
+"use client";
+import { Loading, UserInfo } from "@/components";
+import { useUser } from "@/context/UserContext";
 import { auth } from "@/firebase.config";
 
 export default async function Me() {
-  const user = auth.currentUser;
+  const { user, isLoading } = useUser();
 
-  return (
-    <div className="h-full flex items-center">
-      {user && <UserInfo user={user} />}
-    </div>
-  )
+  if (isLoading) return <Loading />
+  else if (user) {
+    return (
+      <div className="h-full flex items-center">
+        {user && <UserInfo user={user} />}
+      </div>
+    )
+  }
 }

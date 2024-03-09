@@ -1,7 +1,8 @@
 "use client";
+import { User } from 'firebase/auth';
 import Link from 'next/link'
 
-const UserInfo = ({ user }: any) => {
+const UserInfo = ({ user }: {user: User}) => {
   return (
     <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg shadow-shadowLight rounded-xl mt-16">
       <div className="px-6">
@@ -9,7 +10,7 @@ const UserInfo = ({ user }: any) => {
           <div className="w-full flex justify-center">
             <div className="relative">
               <img
-                src={user?.picture || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"}
+                src={user?.photoURL || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"}
                 className="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
               />
             </div>
