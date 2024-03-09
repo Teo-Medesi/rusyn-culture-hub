@@ -23,7 +23,6 @@ const FileInput = ({ name, onFileChange, maxFileSize = 5 * 1024 * 1024 /* 5 MB *
         console.error('File size exceeded');
         return;
       }
-
       setSelectedFile(file);
       onFileChange(file);
     } else {

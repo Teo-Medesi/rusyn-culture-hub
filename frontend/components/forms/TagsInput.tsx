@@ -14,12 +14,14 @@ const Tag = ({ text, onDelete }: { text: string, onDelete: MouseEventHandler }) 
 }
 
 interface TagsInput {
+  placeholder?: string;
+  name: string;
   tags: string[];
   onNewTag: (tag: string) => void;
   onTagDelete: (tag: string) => void;
 }
 
-const TagsInput = ({ tags, onNewTag, onTagDelete }: TagsInput) => {
+const TagsInput = ({ placeholder, name, tags, onNewTag, onTagDelete }: TagsInput) => {
   const [newTag, setNewTag] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>();
@@ -35,10 +37,10 @@ const TagsInput = ({ tags, onNewTag, onTagDelete }: TagsInput) => {
   return (
     <>
       <label htmlFor="tags" className="text-gray-700 text-xs sm:text-md mt-4">
-        Tags
+        {name}
       </label>
-      <input onKeyDown={onKeyDown} ref={inputRef} type="text" onChange={(event) => setNewTag(event.target?.value)} placeholder="Enter Tag Here" name="tags" className="textarea outline-none textarea-bordered" />
-      <div className="mt-4 flex gap-4">
+      <input onKeyDown={onKeyDown} ref={inputRef} type="text" onChange={(event) => setNewTag(event.target?.value)} placeholder={placeholder || "Enter Tag Here"} name="tags" className="textarea outline-none textarea-bordered" />
+      <div className="mt-4 flex gap-4 flex-wrap">
         {
           tags?.map((tag, index) => <Tag key={index} text={tag} onDelete={() => onTagDelete(tag)} />)
         }
