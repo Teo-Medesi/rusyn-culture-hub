@@ -35,7 +35,7 @@ const CreateNewPost = () => {
           <SelectInput options={regionOptions} name={"Region / Country"} placeholder="Where is this song played?" onChange={(event) => setRegion((event.target as HTMLInputElement).value)} />
           <TextAreaInput name="Lyrics" onChange={(event) => setLyrics((event.target as HTMLInputElement).value)} placeholder="Ей, Нє видно тот мой валал..." />
           <TextInput name="External Links" placeholder="" onChange={() => { }} />
-          <FileInput name="Sheet Music" onChange={() => { }} />
+          <FileInput name="Sheet Music" onChange={} />
           <TagsInput tags={tags} onNewTag={(tag) => setTags(current => [...current, tag])} onTagDelete={(tag) => setTags(tags.filter(element => element != tag))} />
         </form>
       </div>
