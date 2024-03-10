@@ -1,5 +1,3 @@
-
-
 interface Post {
     id?: string;
     songTitle: string;
@@ -11,7 +9,14 @@ interface Post {
     userId: string;
 }
 
+interface Filter {
+    alphabetical: "ascending" | "descending" | string;
+    region: "panonia" | "ukraine" | "poland" | "slovakia" | "romania" | "hungary" | null;
+    keywords: string | null;
+}
+
 export type {
-    Post
+    Post,
+    Filter
 }
   

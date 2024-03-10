@@ -3,6 +3,9 @@ import type { Post } from "@/types"
 import Link from "next/link";
 import Tag from "./Tag";
 import { useRouter } from "next/navigation";
+import { SelectInput } from "./forms";
+import { useDiscover } from "./Discover";
+import { ChangeEvent } from "react";
 
 const TableRow = ({ songTitle, region, tags, id }: Post) => {
   const router = useRouter();
@@ -35,6 +38,12 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
 };
 
 const SongTable = ({ posts }: { posts: Post[] }) => {
+  const { setFilter } = useDiscover();
+
+  const handleSortChange = async (event: ChangeEvent<Element>) => {
+    setFilter(prevState => ({...prevState, alphabetical: event.target.value}));
+  }
+  
   return (
     <div className="flex flex-wrap -mx-3 mb-5">
       <div className="w-full max-w-full px-3 mb-6 mx-auto">
@@ -42,15 +51,10 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
           <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
             <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
               <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-                <span className="mr-3 font-semibold text-dark">Projects Deliveries</span>
+                <span className="mr-3 font-semibold text-dark">Ruthenian Song Lyrics</span>
               </h3>
               <div className="relative flex flex-wrap items-center my-2">
-                <a
-                  href="javascript:void(0)"
-                  className="inline-block text-[.925rem] font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-150 ease-in-out text-light-inverse bg-light-dark border-light shadow-none border-0 py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light"
-                >
-                  See other projects
-                </a>
+                <SelectInput onChange={(event) => handleSortChange(event)} defaultValue="ascending" name="Sort by" options={[{displayText: "A-Z", value: "ascending"}, {displayText: "Z-A", value: "descending"}]}/>
               </div>
             </div>
             <div className="flex-auto block py-8 pt-6 px-9">
