@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { Option, SelectInput } from "./forms";
 import { useDiscover } from "./Discover";
 import { ChangeEvent } from "react";
-import ukraine from "@/public/flags/ukraine.svg";
-import slovakia from "@/public/flags/slovakia.svg";
-import serbia from "@/public/flags/serbia.svg";
-import romania from "@/public/flags/romania.svg";
-import poland from "@/public/flags/poland.svg";
-import hungary from "@/public/flags/hungary.svg";
-import croatia from "@/public/flags/croatia.svg";
-import universal from "@/public/flags/europe.svg";
+import ukraine from "@/public/ukraine.svg";
+import slovakia from "@/public/slovakia.svg";
+import serbia from "@/public/serbia.svg";
+import romania from "@/public/romania.svg";
+import poland from "@/public/poland.svg";
+import hungary from "@/public/hungary.svg";
+import croatia from "@/public/croatia.svg";
+import universal from "@/public/europe.svg";
 
 const TableRow = ({ songTitle, region, tags, id }: Post) => {
   const router = useRouter();
@@ -24,19 +24,19 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
   const flagSrc = () => {
     switch (region) {
       case "ukraine":
-        return ukraine;
+        return ukraine.src;
       case "slovakia":
-        return slovakia;
+        return slovakia.src;
       case "romania":
-        return romania;
+        return romania.src;
       case "poland":
-        return poland;
+        return poland.src;
       case "hungary":
         return hungary;
       case "universal":
-        return universal;
+        return universal.src;
       default:
-        return universal;
+        return universal.src;
     }
   };
 
@@ -55,12 +55,12 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
       </td>
       <td className="py-4 px-2 w-1/3 pr-0 text-start">
         {region === "panonia" ? (
-          <div className="flex gap-4">
-            <img src={croatia} alt="flag" />
-            <img src={serbia} alt="flag" />
+          <div className="flex gap-2">
+            <img src={serbia.src} className="w-8 aspect-square" alt="flag" />
+            <img src={croatia.src} className="w-8 aspect-square" alt="flag" />
           </div>
         ) : (
-          <img src={flagSrc()} alt="flag" />
+          <img src={flagSrc()} className="w-8 aspect-square" alt="flag" />
         )}
       </td>
       <td className="py-4 px-2 w-1/3 flex justify gap-2 pr-0 text-start">
