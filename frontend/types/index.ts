@@ -11,7 +11,7 @@ interface Post {
 
 interface Filter {
     alphabetical: "ascending" | "descending" | string;
-    region: "panonia" | "ukraine" | "poland" | "slovakia" | "romania" | "hungary" | null;
+    region: "panonia" | "ukraine" | "poland" | "slovakia" | "romania" | "hungary" | "all" | string | null;
     keywords: string | null;
 }
 
@@ -19,4 +19,3 @@ export type {
     Post,
     Filter
 }
-  

@@ -1,21 +1,23 @@
 "use client";
-import type { Post } from "@/types"
+import type { Post } from "@/types";
 import Link from "next/link";
 import Tag from "./Tag";
 import { useRouter } from "next/navigation";
-import { SelectInput } from "./forms";
+import { Option, SelectInput } from "./forms";
 import { useDiscover } from "./Discover";
 import { ChangeEvent } from "react";
 
 const TableRow = ({ songTitle, region, tags, id }: Post) => {
   const router = useRouter();
-  
+
   const handleClick = () => {
-    router.push(`posts/${id}`)
-  }
-  
+    router.push(`posts/${id}`);
+  };
+
   return (
-    <tr onClick={handleClick} className="cursor-pointer hover:bg-gray-100 border-b w-full border-dashed last:border-b-0">
+    <tr
+      onClick={handleClick}
+      className="cursor-pointer hover:bg-gray-100 border-b w-full border-dashed last:border-b-0">
       <td className="py-4 w-1/3 pl-0">
         <div className="flex items-center">
           <div className="flex flex-col justify-start">
@@ -28,7 +30,7 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
       <td className="py-4 px-2 w-1/3 pr-0 text-start">
         <p className=" uppercase">{region}</p>
       </td>
-      <td className="py-4 px-2 w-1/3 flex justify pr-0 text-start">
+      <td className="py-4 px-2 w-1/3 flex justify gap-2 pr-0 text-start">
         {tags?.map((tag, index) => (
           <Tag key={index} text={tag} />
         ))}
@@ -40,10 +42,18 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
 const SongTable = ({ posts }: { posts: Post[] }) => {
   const { setFilter } = useDiscover();
 
-  const handleSortChange = async (event: ChangeEvent<Element>) => {
-    setFilter(prevState => ({...prevState, alphabetical: event.target.value}));
-  }
-  
+  const regionOptions: Option[] = [
+    { value: "panonia", displayText: "Panonia (Croatia & Serbia)" },
+    { value: "ukraine", displayText: "Ukraine" },
+    { value: "slovakia", displayText: "Slovakia" },
+    { value: "poland", displayText: "Poland" },
+    { value: "romania", displayText: "Romania" },
+    { value: "hungary", displayText: "Hungary" },
+    { value: "universal", displayText: "Universal" },
+    { value: "other", displayText: "Other" },
+    { value: "all", displayText: "All" },
+  ];
+
   return (
     <div className="flex flex-wrap -mx-3 mb-5">
       <div className="w-full max-w-full px-3 mb-6 mx-auto">
@@ -51,10 +61,37 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
           <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
             <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
               <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-                <span className="mr-3 font-semibold text-dark">Ruthenian Song Lyrics</span>
+                <span className="mr-3 font-semibold text-dark">
+                  Ruthenian Song Lyrics
+                </span>
               </h3>
-              <div className="relative flex flex-wrap items-center my-2">
-                <SelectInput onChange={(event) => handleSortChange(event)} defaultValue="ascending" name="Sort by" options={[{displayText: "A-Z", value: "ascending"}, {displayText: "Z-A", value: "descending"}]}/>
+              <div className="relative flex flex-wrap items-center my-2 gap-4">
+                {/* FILTER */}
+                <SelectInput
+                  onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                    setFilter((prevState) => ({
+                      ...prevState,
+                      alphabetical: event.target.value,
+                    }))
+                  }
+                  defaultValue="ascending"
+                  name="Sort by"
+                  options={[
+                    { displayText: "A-Z", value: "ascending" },
+                    { displayText: "Z-A", value: "descending" },
+                  ]}
+                />
+                <SelectInput
+                  name="Region"
+                  options={regionOptions}
+                  defaultValue="all"
+                  onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                    setFilter((prevState) => ({
+                      ...prevState,
+                      region: event.target.value,
+                    }))
+                  }
+                />
               </div>
             </div>
             <div className="flex-auto block py-8 pt-6 px-9">
@@ -69,7 +106,7 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
                   </thead>
                   <tbody>
                     {posts.map((post, index) => (
-                      <TableRow key={index} {...post}/>
+                      <TableRow key={index} {...post} />
                     ))}
                   </tbody>
                 </table>
@@ -81,6 +118,5 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
     </div>
   );
 };
-
 
 export default SongTable;
