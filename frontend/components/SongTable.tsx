@@ -1,17 +1,43 @@
 "use client";
 import type { Post } from "@/types";
-import Link from "next/link";
 import Tag from "./Tag";
 import { useRouter } from "next/navigation";
 import { Option, SelectInput } from "./forms";
 import { useDiscover } from "./Discover";
 import { ChangeEvent } from "react";
+import ukraine from "@/public/flags/ukraine.svg";
+import slovakia from "@/public/flags/slovakia.svg";
+import serbia from "@/public/flags/serbia.svg";
+import romania from "@/public/flags/romania.svg";
+import poland from "@/public/flags/poland.svg";
+import hungary from "@/public/flags/hungary.svg";
+import croatia from "@/public/flags/croatia.svg";
+import universal from "@/public/flags/europe.svg";
 
 const TableRow = ({ songTitle, region, tags, id }: Post) => {
   const router = useRouter();
 
   const handleClick = () => {
     router.push(`posts/${id}`);
+  };
+
+  const flagSrc = () => {
+    switch (region) {
+      case "ukraine":
+        return ukraine;
+      case "slovakia":
+        return slovakia;
+      case "romania":
+        return romania;
+      case "poland":
+        return poland;
+      case "hungary":
+        return hungary;
+      case "universal":
+        return universal;
+      default:
+        return universal;
+    }
   };
 
   return (
@@ -28,7 +54,14 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
         </div>
       </td>
       <td className="py-4 px-2 w-1/3 pr-0 text-start">
-        <p className=" uppercase">{region}</p>
+        {region === "panonia" ? (
+          <div className="flex gap-4">
+            <img src={croatia} alt="flag" />
+            <img src={serbia} alt="flag" />
+          </div>
+        ) : (
+          <img src={flagSrc()} alt="flag" />
+        )}
       </td>
       <td className="py-4 px-2 w-1/3 flex justify gap-2 pr-0 text-start">
         {tags?.map((tag, index) => (

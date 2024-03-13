@@ -1,19 +1,22 @@
 "use client";
-import Image from 'next/image';
+import Image from "next/image";
 import { useState } from "react";
 import { TextInput } from "../forms";
-import { signInWithEmailAndPassword, signInWithRedirect, getRedirectResult } from "@firebase/auth";
-import { auth, provider } from "@/firebase.config"
-import { GoogleButton } from '.';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { MouseEvent } from 'react';
-import { useEffect } from 'react';
+import {
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+  getRedirectResult,
+} from "@firebase/auth";
+import { auth, provider } from "@/firebase.config";
+import { GoogleButton } from ".";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Link from "next/link";
 
 /* 
   https://www.chromium.org/developers/design-documents/create-amazing-password-forms/
   optimize forms to follow guidelines
-*/ 
+*/
 
 const SignIn = ({ logo }: { logo: string }) => {
   const [email, setEmail] = useState<string>("");
@@ -26,19 +29,18 @@ const SignIn = ({ logo }: { logo: string }) => {
     if (auth) {
       handleRedirect();
     }
-  }, [auth])
+  }, [auth]);
 
   const handleRedirect = async () => {
-    console.log("handle redirect")
-    
+    console.log("handle redirect");
+
     router.prefetch("/app");
     const result = await getRedirectResult(auth);
 
     if (result) {
       router.push("/app");
     }
-
-  }
+  };
 
   const handleSignIn = (event: any) => {
     event.preventDefault();
@@ -46,20 +48,22 @@ const SignIn = ({ logo }: { logo: string }) => {
     if (email && password) {
       router.prefetch("/app");
 
-      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        router.push("/app");
-      }).catch((error) => {
-        setError(error.message);
-      });
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          router.push("/app");
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
     }
-  }
+  };
 
   // TO-DO: Add Google Sign In with Redirect for Mobile Users! Pop Up is not Prefferable for Mobile!
   const handleGoogleSignIn = (event: any) => {
     event.preventDefault();
-    
+
     signInWithRedirect(auth, provider);
-  }
+  };
 
   return (
     <div>
@@ -67,13 +71,8 @@ const SignIn = ({ logo }: { logo: string }) => {
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
             href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-base-content"
-          >
-            <Image
-              className="w-12 h-12 mr-2"
-              src={logo}
-              alt="logo"
-            />
+            className="flex items-center mb-6 text-2xl font-semibold text-base-content">
+            <Image className="w-12 h-12 mr-2" src={logo} alt="logo" />
           </a>
           <div className="w-full bg-white rounded-lg shadow-sm border border-base-200 md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -81,8 +80,18 @@ const SignIn = ({ logo }: { logo: string }) => {
                 Sign in to your account
               </h1>
               <form className="" action="#">
-                <TextInput type='email' name='Email' placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} />
-                <TextInput type='password' name='Password' placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <TextInput
+                  type="email"
+                  name="Email"
+                  placeholder="name@company.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextInput
+                  type="password"
+                  name="Password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
 
                 {error && <p className="text-error italic">{error}</p>}
 
@@ -105,32 +114,36 @@ const SignIn = ({ logo }: { logo: string }) => {
                   </div>
                   <a
                     href="#"
-                    className="text-sm font-medium text-primary-600 hover:underline"
-                  >
+                    className="text-sm font-medium text-primary-600 hover:underline">
                     Forgot password?
                   </a>
                 </div>
-                <button onClick={(event) => handleSignIn(event)} className="w-full btn mt-4 btn-primary">
+                <button
+                  onClick={(event) => handleSignIn(event)}
+                  className="w-full btn mt-4 btn-primary">
                   Sign in
                 </button>
                 <p className="text-sm mt-4 font-light text-gray-500">
                   Don’t have an account yet?{" "}
                   <Link
                     href="/auth/sign-up"
-                    className="font-medium text-primary-600 hover:underline"
-                  >
+                    className="font-medium text-primary-600 hover:underline">
                     Sign up
                   </Link>
                 </p>
-                <div className='!h-[1px] bg-gray-500 mt-6 w-full'></div>
-                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={(event) => handleGoogleSignIn(event)} /></div>
+                <div className="!h-[1px] bg-gray-500 mt-6 w-full"></div>
+                <div className="mt-6 w-full flex justify-center">
+                  <GoogleButton
+                    onClick={(event) => handleGoogleSignIn(event)}
+                  />
+                </div>
               </form>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
