@@ -12,9 +12,11 @@ interface SelectInput {
   options: Option[];
   onChange: ChangeEventHandler;
   defaultValue?: string;
+  value?: string;
 }
 
 const SelectInput = ({
+  value,
   name,
   placeholder,
   options,
@@ -31,6 +33,7 @@ const SelectInput = ({
       <select
         defaultValue={defaultValue || ""}
         onChange={onChange}
+        value={value}
         name={name.replaceAll(" ", "_").toLowerCase()}
         className="select select-bordered w-full ">
         <option disabled selected>

@@ -1,8 +1,10 @@
 "use client";
+import { useUser } from "@/context/UserContext";
 import { db } from "@/firebase.config";
 import type { Post } from "@/types";
 import { User } from "firebase/auth";
 import { collection, doc, getDoc } from "firebase/firestore";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import NotFound from "./NotFound";
@@ -13,7 +15,7 @@ import Tag from "./Tag";
 export default function Post({ postId }: { postId: string }) {
   const [post, setPost] = useState<Post | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useUser();
 
   useEffect(() => {
     getPost();
@@ -41,7 +43,8 @@ export default function Post({ postId }: { postId: string }) {
   }
   else if (post) {
     return (
-      <div className="flex flex-col w-full h-full lg:flex-row">
+      <>
+            <div className="flex flex-col w-full h-full lg:flex-row">
         <div className="p-8 lg:basis-1/3">
         </div>
         <div className="flex lg:basis-1/3 flex-col items-center">
@@ -63,6 +66,21 @@ export default function Post({ postId }: { postId: string }) {
           </div>
         </div>
       </div>
+      <div
+        role="alert"
+        className={`alert flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${
+          user?.uid === post.userId ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}>
+        <div className="flex gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>You are the owner of this post!</span>
+        </div>
+        <Link href={`/app/posts/${postId}/edit`} className="btn btn-primary">
+          EDIT POST
+        </Link>
+      </div>
+
+      </>
     )
   }
   else {
