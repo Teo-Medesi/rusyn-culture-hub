@@ -2,7 +2,7 @@
 import { useUser } from "@/context/UserContext";
 import { db } from "@/firebase.config";
 import { Post } from "@/types";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ const EditPost = ({ postId }: { postId: string }) => {
   const { user, isLoading } = useUser();
   const [isPostLoading, setIsPostLoading] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   const [tags, setTags] = useState<string[]>([]);
@@ -96,6 +97,26 @@ const EditPost = ({ postId }: { postId: string }) => {
     }
   };
 
+  const handleDeletePost = async () => {
+    try {
+      // perhaps an unneccesarry safeguard?
+      if (user && !isLoading) {
+
+
+        const docRef = doc(db, "posts", postId);
+
+        await deleteDoc(docRef);
+
+        // UI thing, show success alert
+        setIsDeleted(true);
+
+      }
+    } catch (error: any) {
+      console.error("Error editing new post:", error);
+      setError(error);
+    }
+  }
+
   if (isPostLoading && isLoading) return <Loading />
   else return (
     <>
@@ -160,9 +181,14 @@ const EditPost = ({ postId }: { postId: string }) => {
           </form>
         </div>
         <div className="pb-4 justify-center flex-col items-end mt-2 sm:mt-8 flex">
-          <button onClick={handlePost} className="btn btn-primary">
-            Save
-          </button>
+          <div className="flex w-full justify-between">
+            <button onClick={handleDeletePost} className="btn btn-outline btn-error">
+              Delete
+            </button>
+            <button onClick={handlePost} className="btn btn-primary">
+              Save
+            </button>
+          </div>
         </div>
       </div>
       <div
@@ -207,6 +233,20 @@ const EditPost = ({ postId }: { postId: string }) => {
           </svg>
           <p>
             Couldn't update post! <span className="ml-4 italic">{error}</span>
+          </p>
+        </div>
+        <Link href="/app" className="btn">
+          GO TO HOME
+        </Link>
+      </div>
+      <div
+        role="alert"
+        className={`alert alert-warning flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${isDeleted ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+        <div className="flex gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          <p>
+            Post successfully deleted!
           </p>
         </div>
         <Link href="/app" className="btn">

@@ -54,7 +54,7 @@ const Discover = () => {
         let queryConstraints = [];
 
         // filter by region
-        if (filter.region) {
+        if (filter.region && filter.region !== "all") {
             queryConstraints.push(where("region", "==", filter.region));
         }
 
