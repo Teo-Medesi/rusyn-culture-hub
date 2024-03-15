@@ -2,7 +2,7 @@
 import { useUser } from "@/context/UserContext";
 import { db } from "@/firebase.config";
 import { Post } from "@/types";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,7 +22,6 @@ const EditPost = ({ postId }: { postId: string }) => {
   const [isPostLoading, setIsPostLoading] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [newPostId, setNewPostId] = useState<string>("");
 
   const [tags, setTags] = useState<string[]>([]);
   const [links, setLinks] = useState<string[]>([]);
@@ -76,29 +75,23 @@ const EditPost = ({ postId }: { postId: string }) => {
       // perhaps an unneccesarry safeguard?
       if (user && !isLoading) {
         // TO-DO Validate or preprocess data if needed
-        const post: Post = {
+        const docRef = doc(db, "posts", postId);
+
+        await updateDoc(docRef, {
           songTitle,
           region,
           lyrics,
           links,
           files,
-          tags,
-          userId: user.uid,
-        };
+          tags
+        });
 
-        if (process.env.NEXT_PUBLIC_DEBUG) console.log(post);
+        // UI thing, show success alert
+        setIsSuccess(true);
 
-        const collectionRef = collection(db, "posts");
-        const result = await addDoc(collectionRef, post);
-
-        if (result) {
-          // UI thing, show success alert
-          setIsSuccess(true);
-          setNewPostId(result.id);
-        }
       }
     } catch (error: any) {
-      console.error("Error creating new post:", error);
+      console.error("Error editing new post:", error);
       setError(error);
     }
   };
@@ -167,19 +160,15 @@ const EditPost = ({ postId }: { postId: string }) => {
           </form>
         </div>
         <div className="pb-4 justify-center flex-col items-end mt-2 sm:mt-8 flex">
-          <div className="flex gap-2 justify-center">
-            <button onClick={handlePost} className="btn btn-primary">
-              Save
-            </button>
-            <button className=" btn btn-accent btn-outline">Save Draft</button>
-          </div>
+          <button onClick={handlePost} className="btn btn-primary">
+            Save
+          </button>
         </div>
       </div>
       <div
         role="alert"
-        className={`alert flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${
-          isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}>
+        className={`alert flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
         <div className="flex gap-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -193,17 +182,16 @@ const EditPost = ({ postId }: { postId: string }) => {
               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <span>Post successfully altered!</span>
+          <span>Post successfully updated!</span>
         </div>
-        <Link href={`/app/posts/${newPostId}`} className="btn">
+        <Link href={`/app/posts/${postId}`} className="btn">
           GO TO POST
         </Link>
       </div>
       <div
         role="alert"
-        className={`alert alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${
-          error ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}>
+        className={`alert alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${error ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
         <div className="flex gap-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +206,7 @@ const EditPost = ({ postId }: { postId: string }) => {
             />
           </svg>
           <p>
-            Couldn't alter post! <span className="ml-4 italic">{error}</span>
+            Couldn't update post! <span className="ml-4 italic">{error}</span>
           </p>
         </div>
         <Link href="/app" className="btn">
