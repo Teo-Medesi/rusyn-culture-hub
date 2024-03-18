@@ -10,6 +10,7 @@ const FilesInput = ({ name, onFilesChange, maxFileSize = 5 * 1024 * 1024 /* 5 MB
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const files = event.target.files;
 
     if (files && files.length > 0) {
@@ -35,13 +36,11 @@ const FilesInput = ({ name, onFilesChange, maxFileSize = 5 * 1024 * 1024 /* 5 MB
   return (
     <>
       <label
-        htmlFor={name}
         className="text-gray-700 text-xs sm:text-md mt-4"
       >
-        Sheet Music
+        {name}
       </label>
       <input
-        id={name}
         onChange={handleFilesChange}
         type="file"
         multiple

@@ -21,6 +21,7 @@ const EditPost = ({ postId }: { postId: string }) => {
   const { user, isLoading } = useUser();
   const [isPostLoading, setIsPostLoading] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isFileError, setIsFileError] = useState<boolean>(false);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
@@ -45,6 +46,20 @@ const EditPost = ({ postId }: { postId: string }) => {
   useEffect(() => {
     getPost();
   }, []);
+
+  const handleFiles = (files: File[]) => {
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    
+    if (imageFiles.length === 0) {
+        // No image files uploaded
+        setIsFileError(true);
+    } else {
+        // At least one image file uploaded
+        setIsFileError(false);
+        console.log('Image files uploaded:', imageFiles);
+        setFiles(imageFiles);
+    }
+  }
 
   const getPost = async () => {
     try {
@@ -83,7 +98,6 @@ const EditPost = ({ postId }: { postId: string }) => {
           region,
           lyrics,
           links,
-          files,
           tags
         });
 
@@ -120,7 +134,7 @@ const EditPost = ({ postId }: { postId: string }) => {
   if (isPostLoading && isLoading) return <Loading />
   else return (
     <>
-      <div className="max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg shadow-shadowLight rounded-xl mt-16 px-6">
+      <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen shadow-lg shadow-shadowLight rounded-xl px-6">
         <div className="mt-3  sm:mt-5">
           <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
             Edit Post
@@ -168,8 +182,9 @@ const EditPost = ({ postId }: { postId: string }) => {
             />
             <FilesInput
               name="Sheet Music"
-              onFilesChange={(files) => setFiles(files)}
+              onFilesChange={handleFiles}
             />
+            <p className={`text-gray-500 text-sm ${isFileError && "!text-error italic"}`}>The only file format supported for sheet music are images! Files not supported will not be included in upload.</p>
             <TagsInput
               name="tags"
               tags={tags}

@@ -20,6 +20,7 @@ const CreateNewPost = () => {
   const { user, isLoading } = useUser();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
+  const [isFileError, setIsFileError] = useState<boolean>(false);
   const [newPostId, setNewPostId] = useState<string>("");
 
   const [tags, setTags] = useState<string[]>([]);
@@ -40,6 +41,20 @@ const CreateNewPost = () => {
     { value: "other", displayText: "Other" },
   ];
 
+  const handleFiles = (files: File[]) => {
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    
+    if (imageFiles.length === 0) {
+        // No image files uploaded
+        setIsFileError(true);
+    } else {
+        // At least one image file uploaded
+        setIsFileError(false);
+        console.log('Image files uploaded:', imageFiles);
+        setFiles(imageFiles);
+    }
+  }
+
   const handlePost = async () => {
     try {
       // perhaps an unneccesarry safeguard?
@@ -50,10 +65,11 @@ const CreateNewPost = () => {
           region,
           lyrics,
           links,
-          files,
           tags,
-          userId: user.uid,
+          userId: user.uid, 
         };
+
+        // TO-DO USE FIREBASE STORAGE TO UPLOAD IMAGE FILES
 
         if (process.env.NEXT_PUBLIC_DEBUG) console.log(post);
 
@@ -74,7 +90,7 @@ const CreateNewPost = () => {
 
   return (
     <>
-      <div className="max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg shadow-shadowLight rounded-xl mt-16 px-6">
+      <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen shadow-lg shadow-shadowLight rounded-xl px-6">
         <div className="mt-3  sm:mt-5">
           <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
             Create New Post
@@ -119,8 +135,9 @@ const CreateNewPost = () => {
             />
             <FilesInput
               name="Sheet Music"
-              onFilesChange={(files) => setFiles(files)}
+              onFilesChange={handleFiles}
             />
+            <p className={`text-gray-500 text-sm ${isFileError && "!text-error italic"}`}>The only file format supported for sheet music are images! Files not supported will not be included in upload.</p>
             <TagsInput
               name="tags"
               tags={tags}
