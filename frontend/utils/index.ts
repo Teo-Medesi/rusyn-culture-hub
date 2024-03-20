@@ -58,7 +58,55 @@ function isCyrillic(text: string): boolean {
     return cyrillicRegex.test(text);
 }
 
+function cyrillicToLatin(text: string): string {
+    const cyrillicToLatinMap: { [key: string]: string } = {
+        "а": "a", "б": "b", "в": "v", "г": "kh", "д": "d", "е": "e", "ё": "yo", "ж": "zh", "з": "z",
+        "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p", "р": "r",
+        "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts", "ч": "ch", "ш": "sh", "щ": "shch",
+        "ъ": "ie", "ы": "y", "ь": "'", "э": "e", "ю": "yu", "я": "ya", "є": "ye", "ї": "yi",
+        "А": "A", "Б": "B", "В": "V", "Г": "G", "Д": "D", "Е": "E", "Ё": "Yo", "Ж": "Zh", "З": "Z",
+        "И": "I", "Й": "Y", "К": "K", "Л": "L", "М": "M", "Н": "N", "О": "O", "П": "P", "Р": "R",
+        "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "Kh", "Ц": "Ts", "Ч": "Ch", "Ш": "Sh", "Щ": "Shch",
+        "Ъ": "Ie", "Ы": "Y", "Ь": "'", "Э": "E", "Ю": "Yu", "Я": "Ya"
+    };
+
+    let result = "";
+    for (let char of text) {
+        result += cyrillicToLatinMap[char] || char;
+    }
+    return result;
+}
+
+function latinToCyrillic(text: string): string {
+    const latinToCyrillicMap: { [key: string]: string } = {
+        "a": "а", "b": "б", "v": "в", "g": "г", "d": "д", "e": "е", "yo": "ё", "zh": "ж", "z": "з",
+        "i": "и", "y": "й", "k": "к", "l": "л", "m": "м", "n": "н", "o": "о", "p": "п", "r": "р",
+        "s": "с", "t": "т", "u": "у", "f": "ф", "kh": "х", "ts": "ц", "ch": "ч", "sh": "ш", "shch": "щ",
+        "ie": "ъ", "iu": "ю", "ya": "я",
+        "A": "А", "B": "Б", "V": "В", "G": "Г", "D": "Д", "E": "Е", "Yo": "Ё", "Zh": "Ж", "Z": "З",
+        "I": "И", "Y": "Й", "K": "К", "L": "Л", "M": "М", "N": "Н", "O": "О", "P": "П", "R": "Р",
+        "S": "С", "T": "Т", "U": "У", "F": "Ф", "Kh": "Х", "Ts": "Ц", "Ch": "Ч", "Sh": "Ш", "Shch": "Щ",
+        "Ie": "Ъ", "Iu": "Ю", "Ya": "Я"
+    };
+
+    let result = "";
+    for (let i = 0; i < text.length; i++) {
+        let char = text[i];
+        let nextTwoChars = text.substr(i, 2);
+        let cyrillicChar = latinToCyrillicMap[nextTwoChars];
+        if (cyrillicChar) {
+            result += cyrillicChar;
+            i++; // Skip next character as it's part of a 2-character combination
+        } else {
+            result += latinToCyrillicMap[char] || char;
+        }
+    }
+    return result;
+}
+
 export {
     transliterateToCyrillic,
-    isCyrillic
+    isCyrillic,
+    cyrillicToLatin,
+    latinToCyrillic
 }

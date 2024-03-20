@@ -2,6 +2,7 @@
 import { useUser } from "@/context/UserContext";
 import { db } from "@/firebase.config";
 import type { Post } from "@/types";
+import { cyrillicToLatin, isCyrillic as isCyrillicScript, latinToCyrillic } from "@/utils";
 import { User } from "firebase/auth";
 import { collection, doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
@@ -15,6 +16,9 @@ import Tag from "./Tag";
 export default function Post({ postId }: { postId: string }) {
   const [post, setPost] = useState<Post | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  
+  // convert from cyrillic to latin or vice-versa
+  const [isSwitchToggled, setIsSwitchToggled] = useState<boolean>(false);
   const { user } = useUser();
 
   useEffect(() => {
@@ -44,26 +48,28 @@ export default function Post({ postId }: { postId: string }) {
   else if (post) {
     return (
       <>
-        <div className="flex flex-col w-full h-full lg:flex-row">
+        <div className="flex px-8 flex-col w-full h-max lg:flex-row">
           <div className="p-8 lg:basis-1/3">
           </div>
           <div className="flex min-h-screen lg:basis-1/3 flex-col items-center">
-            <div className="flex flex-col items-center h-[110vh]">            
-              <h1 className="text-3xl mb-8 text-center lg:text-5xl">{post.songTitle}</h1>
-              <p className="text-base md:text-lg mb-24 lg:text-xl whitespace-pre text-justify tracking-wider">{post.lyrics}</p>
+            <div className="flex flex-col items-center min-h-[110vh]">
+              <h1 className="text-3xl mb-8 text-center lg:text-5xl">{isSwitchToggled ? cyrillicToLatin(post.songTitle) : post.songTitle}</h1>
+              <p className="text-base md:text-lg mb-24 lg:text-xl whitespace-pre text-justify tracking-wider">{isSwitchToggled ? cyrillicToLatin(post.lyrics) : post.lyrics}</p>
             </div>
-            <div>
+            <div className="">
+              <div className="flex justify-start mb-4 w-full gap-2">
+                {
+                  post.tags?.map((tag, index) => <Tag key={index} text={tag} />)
+                }
+                <Tag text={post.region} />
+              </div>
+
               {post?.links && <h1 className="text-3xl mb-8 text-center lg:text-5xl">External Links</h1>}
               <div className="pb-24">{post?.links?.map(link => <p className="cursor-pointer">{link}</p>)}</div>
             </div>
           </div>
-          <div className="p-4 lg:basis-1/3">
-            <div className="flex justify-start w-full gap-2">
-              {
-                post.tags?.map((tag, index) => <Tag key={index} text={tag} />)
-              }
-              <Tag text={post.region} />
-            </div>
+          <div className="p-4 lg:basis-1/3 flex justify-end">
+                <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
           </div>
         </div>
         <div
