@@ -1,53 +1,148 @@
 "use client";
 import Markdown from "react-markdown";
 import { encodeMarkdownForJSON } from "@/utils";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { TextAreaInput, TextInput } from "./forms";
+import { useUser } from "@/context/UserContext";
+import { BlogPost } from "@/types";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase.config";
+import Link from "next/link";
 
-
-const MarkdownInput = ({ order }: { order: number }) => {
+const MarkdownInput = () => {
   const [markdown, setMarkdown] = useState<string>("");
   const [isPreview, setIsPreview] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
+  const [newPostId, setNewPostId] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
 
-  const handlePost = () => {
+  const { user, isLoading } = useUser();
 
+  const handlePost = async () => {
+    try {
+      // perhaps an unneccesarry safeguard?
+      if (user && !isLoading) {
+        // TO-DO Validate or preprocess data if needed
+        const blogPost: BlogPost = {
+          title,
+          description,
+          markdown: encodeMarkdownForJSON(markdown),
+          userId: user.uid,
+        };
+
+        if (process.env.NEXT_PUBLIC_DEBUG) console.log(blogPost);
+
+        const collectionRef = collection(db, "blogPosts");
+        const result = await addDoc(collectionRef, blogPost);
+
+        if (result) {
+          // UI thing, show success alert
+          setIsSuccess(true);
+          setNewPostId(result.id);
+        }
+      }
+    } catch (error: any) {
+      console.error("Error creating new post:", error);
+      setError(error);
+    }
   };
 
   return (
-    <div className="flex h-full overflow-x-hidden">
-      <div className="w-1/2 flex p-8">
-        <div
-          className={`fixed text-xl ml-8 mb-8 left-0 bottom-0 ${markdown.length < 100 || markdown.length > 10000
+    <>
+      <div className="flex h-full overflow-x-hidden">
+        <div className="w-1/2 flex flex-col p-8">
+          <div
+            className={`fixed text-xl ml-8 mb-8 left-0 bottom-0 ${markdown.length < 500 || markdown.length > 20000
               ? "text-red-500"
               : "text-green-500"
-            }`}>
-          {markdown.length}
+              }`}>
+            {markdown.length}
+          </div>
+          <TextInput className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none" name="Title" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
+          <TextAreaInput placeholder="Meta descriptions improve SEO ratings and makes it easier for people to find your post!" className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none" name="Description (Optional) -> displayed as a meta description tag in google search listings" onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)} />
+          <textarea
+            onChange={(e) => setMarkdown(e.target.value)}
+            placeholder="Start writing your markdown here!"
+            name="markdown"
+            className="w-full h-full outline-none"
+          />
         </div>
-        <textarea
-          onChange={(e) => setMarkdown(e.target.value)}
-          placeholder="# Start with the Title"
-          name="markdown"
-          className="w-full h-full outline-none"
-        />
-      </div>
-      <div className="divider divider-horizontal "></div>
-      <div className="p-8 w-1/2 relative">
-        <button
-          onClick={() => setIsPreview((current) => !current)}
-          className="fixed btn btn-primary mr-8 mt-[10vh] right-0 top-0">
-          {isPreview ? "Switch to Cheat Sheet" : "Switch to Preview"}
-        </button>
+        <div className="divider divider-horizontal "></div>
+        <div className="p-8 w-1/2 relative">
+          <button
+            onClick={() => setIsPreview((current) => !current)}
+            className="fixed btn btn-primary mr-8 mt-[10vh] right-0 top-0">
+            {isPreview ? "Switch to Cheat Sheet" : "Switch to Preview"}
+          </button>
 
-        {isPreview ? (
-          <Markdown className="prose mb-12 px-4 lg:px-0">{markdown}</Markdown>
-        ) : (
-          <p className="mb-12 px-4 lg:px-0">
-            <MarkdownCheatSheet />
-          </p>
-        )}
-        
+          <button onClick={handlePost} className={`fixed btn btn-primary mr-8 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) && "btn-disabled"}`}>
+              Post
+          </button>
+
+          {isPreview ? (
+            <div className="flex flex-col">
+              <Markdown className="prose mb-12">{`# ${title}`}</Markdown>
+              <Markdown className="prose mb-12 px-4 lg:px-0">{markdown}</Markdown>
+            </div>
+          ) : (
+            <p className="mb-12 px-4 lg:px-0">
+              <MarkdownCheatSheet />
+            </p>
+          )}
+
+        </div>
       </div>
-    </div>
+      <div
+        role="alert"
+        className={`alert z-10 flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+        <div className="flex gap-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Post successfully created!</span>
+        </div>
+        <Link href={`/app/blog/posts/${newPostId}`} className="btn">
+          GO TO POST
+        </Link>
+      </div>
+      <div
+        role="alert"
+        className={`alert z-10 alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${error ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+        <div className="flex gap-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <p>
+            Couldn't create post! <span className="ml-4 italic">{error}</span>
+          </p>
+        </div>
+        <Link href="/app" className="btn">
+          GO TO HOME
+        </Link>
+      </div></>
   );
 };
 

@@ -9,6 +9,14 @@ interface Post {
     userId: string;
 }
 
+interface BlogPost {
+    id?: string;
+    title: string;
+    description?: string;
+    markdown: string;
+    userId: string;
+}
+
 interface Filter {
     alphabetical: "ascending" | "descending" | string;
     region: "panonia" | "ukraine" | "poland" | "slovakia" | "romania" | "hungary" | "all" | string | null;
@@ -17,5 +25,6 @@ interface Filter {
 
 export type {
     Post,
+    BlogPost,
     Filter
 }
