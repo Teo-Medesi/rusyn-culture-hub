@@ -2,16 +2,16 @@
 import { User } from 'firebase/auth';
 import Link from 'next/link'
 
-const UserInfo = ({ user }: {user: User}) => {
+const UserInfo = ({ user }: { user: User }) => {
   return (
     <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg shadow-shadowLight rounded-xl mt-16">
       <div className="px-6">
         <div className="flex flex-wrap justify-center">
           <div className="w-full flex justify-center">
-            <div className="relative">
+            <div className="relative flex justify-center lg:block">
               <img
                 src={user?.photoURL || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"}
-                className="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
+                className="shadow-xl rounded-full align-middle border-none lg:absolute lg:-m-16 md:ml-20 lg:-ml-16 max-w-[150px]"
               />
             </div>
           </div>
@@ -39,7 +39,7 @@ const UserInfo = ({ user }: {user: User}) => {
           </div>
         </div>
         <div className="text-center mt-2">
-          <h3 className="text-2xl text-slate-700 font-bold leading-normal mb-1">
+          <h3 className="text-xl lg:text-2xl text-slate-700 font-bold leading-normal mb-1">
             {user?.name || user.email}
           </h3>
           <div className="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
@@ -53,11 +53,18 @@ const UserInfo = ({ user }: {user: User}) => {
               <p className="font-light leading-relaxed text-slate-600 mb-4">
                 {user?.description || "No description added."}
               </p>
-              <Link href="/app/users/me/posts/create-new"
-                className="font-normal btn btn-secondary"
-              >
-                create new post
-              </Link>
+              <div className='flex flex-col lg:flex-row gap-2 justify-center'>
+                <Link href="/app/users/me/posts/create-new"
+                  className="font-normal btn btn-primary"
+                >
+                  create new song post
+                </Link>
+                <Link href="/app/users/me/blogPosts/create-new"
+                  className="font-normal btn btn-secondary"
+                >
+                  create new blog post
+                </Link>
+              </div>
             </div>
           </div>
         </div>

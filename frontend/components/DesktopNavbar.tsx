@@ -29,7 +29,6 @@ const UserProfile = () => {
           <li>
             <Link href="/app/users/me" className="justify-between">
               Profile
-              <span className="badge">New</span>
             </Link>
           </li>
           <li><Link href="#">Settings</Link></li>

@@ -93,7 +93,7 @@ const CreateNewPost = () => {
       <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen shadow-lg shadow-shadowLight rounded-xl px-6">
         <div className="mt-3  sm:mt-5">
           <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
-            Create New Post
+            Create New Song Post
           </h1>
           <p className="text-xs sm:text-sm text-gray-400 mt-2">
             If possible, write the song's title and lyrics in Cyrillic, but the
