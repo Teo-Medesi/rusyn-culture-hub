@@ -1,4 +1,5 @@
 import daisyui from 'daisyui'
+import typography from "@tailwindcss/typography"
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -22,6 +23,6 @@ const config: Config = {
   daisyui: {
     themes: ["bumblebee"]
   },
-  plugins: [daisyui],
+  plugins: [daisyui, typography],
 }
 export default config

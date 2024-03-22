@@ -17,8 +17,8 @@ function transliterateToCyrillic(text: string): string {
         "h": "х",
         "c": "ц",
         "č": "ч",
-        "š": "ш", 
-        "šč": "щ", 
+        "š": "ш",
+        "šč": "щ",
         "yu": "ю", "ju": "ю",
         "ya": "я", "ja": "я"
     };
@@ -104,9 +104,31 @@ function latinToCyrillic(text: string): string {
     return result;
 }
 
+function encodeMarkdownForJSON(markdown: string) {
+    // Encode special characters
+    let encoded = markdown
+        .replace(/\\/g, '\\\\')   // Escape backslashes
+        .replace(/"/g, '\\"')     // Escape double quotes
+        .replace(/\n/g, '\\n');   // Escape line breaks
+
+    return encoded;
+}
+
+function decodeMarkdownFromJSON(encodedMarkdown: string) {
+    // Decode special characters
+    let decoded = encodedMarkdown
+        .replace(/\\\\/g, '\\')   // Unescape backslashes
+        .replace(/\\"/g, '"')     // Unescape double quotes
+        .replace(/\\n/g, '\n');   // Unescape line breaks
+
+    return decoded;
+}
+
 export {
     transliterateToCyrillic,
     isCyrillic,
     cyrillicToLatin,
-    latinToCyrillic
+    latinToCyrillic,
+    encodeMarkdownForJSON,
+    decodeMarkdownFromJSON
 }
