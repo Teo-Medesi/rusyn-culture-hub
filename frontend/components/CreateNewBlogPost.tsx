@@ -13,6 +13,7 @@ const MarkdownInput = () => {
   const [markdown, setMarkdown] = useState<string>("");
   const [isPreview, setIsPreview] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
+  const [coverImage, setCoverImage] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
   const [newPostId, setNewPostId] = useState<string>("");
@@ -24,13 +25,14 @@ const MarkdownInput = () => {
   const handlePost = async () => {
     try {
       // perhaps an unneccesarry safeguard?
-      if (user && !isLoading) {
+      if (user && !isLoading && !isSuccess) {
         // TO-DO Validate or preprocess data if needed
         const blogPost: BlogPost = {
           title,
           description,
           markdown: encodeMarkdownForJSON(markdown),
           userId: user.uid,
+          coverImage
         };
 
         if (process.env.NEXT_PUBLIC_DEBUG) console.log(blogPost);
@@ -62,6 +64,7 @@ const MarkdownInput = () => {
             {markdown.length}
           </div>
           <TextInput className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none" name="Title" onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} />
+          <TextInput placeholder="https://" className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none" name="Cover Image ( URL )" onChange={(e: ChangeEvent<HTMLInputElement>) => setCoverImage(e.target.value)} />
           <TextAreaInput placeholder="Meta descriptions improve SEO ratings and makes it easier for people to find your post!" className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none" name="Description (Optional) -> displayed as a meta description tag in google search listings" onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)} />
           <textarea
             onChange={(e) => setMarkdown(e.target.value)}
@@ -85,6 +88,7 @@ const MarkdownInput = () => {
           {isPreview ? (
             <div className="flex flex-col">
               <Markdown className="prose mb-12">{`# ${title}`}</Markdown>
+              {coverImage && <img className="w-full aspect-video mb-12" src={coverImage} alt="Cover Image" />}
               <Markdown className="prose mb-12 px-4 lg:px-0">{markdown}</Markdown>
             </div>
           ) : (

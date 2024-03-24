@@ -15,6 +15,7 @@ interface BlogPost {
     description?: string;
     markdown: string;
     userId: string;
+    coverImage?: string;
 }
 
 interface Filter {
