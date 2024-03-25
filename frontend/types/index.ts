@@ -12,10 +12,10 @@ interface Post {
 interface BlogPost {
     id?: string;
     title: string;
-    description?: string;
+    description: string;
     markdown: string;
     userId: string;
-    coverImage?: string;
+    coverImage: string;
 }
 
 interface Filter {

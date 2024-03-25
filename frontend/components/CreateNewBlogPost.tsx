@@ -81,8 +81,8 @@ const MarkdownInput = () => {
             {isPreview ? "Switch to Cheat Sheet" : "Switch to Preview"}
           </button>
 
-          <button onClick={handlePost} className={`fixed btn btn-primary mr-8 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) && "btn-disabled"}`}>
-              Post
+          <button onClick={handlePost} className={`fixed btn btn-primary mr-10 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) && "btn-disabled"}`}>
+            Post
           </button>
 
           {isPreview ? (
