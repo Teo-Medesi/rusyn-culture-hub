@@ -43,7 +43,7 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
   return (
     <tr
       onClick={handleClick}
-      className="cursor-pointer hover:bg-gray-100 border-b w-full border-dashed last:border-b-0">
+      className="cursor-pointer hover:bg-gray-100 border-b w-full last:border-b-0">
       <td className="py-4 w-1/3 pl-0">
         <div className="flex items-center">
           <div className="flex flex-col justify-start">
@@ -91,7 +91,7 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
     <div className="flex flex-wrap -mx-3 mb-5">
       <div className="w-full max-w-full px-3 mb-6 mx-auto">
         <div className="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
-          <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
+          <div className="relative flex flex-col min-w-0 break-words border bg-clip-border rounded-2xl border-stone-200 bg-light/30">
             <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
               <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                 <span className="mr-3 font-semibold text-dark">
