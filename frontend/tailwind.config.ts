@@ -16,12 +16,23 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        shadowLight: "#bbb"
+        shadowLight: "#bbb",
+        gray2: "#707070"
       }
     },
   },
   daisyui: {
-    themes: ["bumblebee"]
+    themes: [
+      {
+        mytheme: {
+          "primary": "#ff3b30",
+          "secondary": "#f6d860",
+          "accent": "#37cdbe",
+          "neutral": "#3d4451",
+          "base-100": "#ffffff",
+        },
+      }
+    ]
   },
   plugins: [daisyui, typography],
 }

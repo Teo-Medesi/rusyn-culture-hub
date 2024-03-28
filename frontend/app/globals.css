@@ -7,7 +7,16 @@ input {
 }
 
 .btn {
-  @apply uppercase font-semibold;
+  @apply rounded-full font-bold text-base;
+}
+
+.btn-primary {
+  @apply text-white;
+}
+
+.btn-white {
+  @apply text-gray2 bg-white;
+  box-shadow: 0 2px 4px 0 rgb(3,3,3, 0.1);
 }
 
 .select {
