@@ -9,6 +9,12 @@ interface Post {
     userId: string;
 }
 
+interface NewsletterUser {
+    id?: string;
+    name: string;
+    email: string;
+}
+
 interface BlogPost {
     id?: string;
     title: string;
@@ -25,6 +31,7 @@ interface Filter {
 }
 
 export type {
+    NewsletterUser,
     Post,
     BlogPost,
     Filter
