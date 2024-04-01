@@ -7,12 +7,21 @@ input {
 }
 
 .btn {
-  @apply rounded-full font-bold text-base;
+  @apply rounded-full font-bold text-base lowercase;
 }
 
 .btn-primary {
   @apply text-white;
 }
+
+.btn-md {
+  @apply !rounded-full !font-bold !text-base !lowercase;
+}
+
+.btn-sm {
+  @apply !rounded-full !font-normal !text-sm !lowercase;
+}
+
 
 .btn-white {
   @apply text-gray2 bg-white;

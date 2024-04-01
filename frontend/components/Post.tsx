@@ -48,13 +48,13 @@ export default function Post({ postId }: { postId: string }) {
   else if (post) {
     return (
       <>
-        <div className="flex px-8 flex-col w-full h-max lg:flex-row">
-          <div className="p-8 lg:basis-1/3">
+        <div className="flex px-5 md:px-8 flex-col w-full h-max lg:flex-row">
+          <div className="md:p-8 lg:basis-1/3">
           </div>
           <div className="flex min-h-screen lg:basis-1/3 flex-col items-center">
             <div className="flex flex-col items-center min-h-[110vh]">
-              <h1 className="text-3xl mb-8 text-center lg:text-5xl">{isSwitchToggled ? cyrillicToLatin(post.songTitle) : post.songTitle}</h1>
-              <p className="text-base md:text-lg mb-24 lg:text-xl whitespace-pre text-justify tracking-wider">{isSwitchToggled ? cyrillicToLatin(post.lyrics) : post.lyrics}</p>
+              <h1 className="text-4xl mb-8 text-center lg:text-5xl">{isSwitchToggled ? cyrillicToLatin(post.songTitle) : post.songTitle}</h1>
+              <p className="text-lg mb-24 lg:text-xl whitespace-pre ">{isSwitchToggled ? cyrillicToLatin(post.lyrics) : post.lyrics}</p>
             </div>
             <div className="">
               <div className="flex justify-start mb-4 w-full gap-2">
@@ -69,18 +69,18 @@ export default function Post({ postId }: { postId: string }) {
             </div>
           </div>
           <div className="p-4 lg:basis-1/3 flex justify-end">
-                <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
+                <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn lowercase ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
           </div>
         </div>
         <div
           role="alert"
-          className={`alert flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${user?.uid === post.userId ? "opacity-100" : "opacity-0 pointer-events-none"
+          className={`alert items-center flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${user?.uid === post.userId ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>You are the owner of this post!</span>
+            <span className="text-sm md:text-base">You are the owner of this post!</span>
           </div>
-          <Link href={`/app/posts/${postId}/edit`} className="btn btn-primary">
+          <Link href={`/app/posts/${postId}/edit`} className="btn btn-primary btn-sm md:btn-md">
             EDIT POST
           </Link>
         </div>

@@ -68,7 +68,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='mt-20'>
+        <div className='my-20'>
         <div className='sm:flex lg:gap-12 sm:justify-center lg:px-24 sm:items-center'>
         <Image alt='Bear knitting something' src={TractorBear} className='w-full sm:shadow-xl sm:rounded-xl sm:rotate-6 sm:w-3/5 lg:w-2/5 xl:w-1/3 aspect-square' />
           <Image alt='Bear knitting something' src={TractorBear} className='hidden lg:block sm:shadow-xl sm:rounded-xl sm:-rotate-6 lg:w-2/5 xl:w-1/3 aspect-square' />
@@ -80,8 +80,6 @@ const Home = () => {
             <button className="mt-5 btn btn-white lg:w-1/2 text-white w-full">Go to About</button>
           </div>
         </div>
-
-
       </div>
     </main>
   )

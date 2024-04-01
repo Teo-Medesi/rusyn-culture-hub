@@ -111,7 +111,7 @@ const Discover = () => {
     } else if (posts)
         return (
             <DiscoverContext.Provider value={{ posts, filter, setFilter, getPosts }}>
-                <div className="w-full h-full">
+                <div className="w-full h-full px-5">
                     <SearchComponent
                         placeholder="Search songs..."
                         className="w-full md:w-1/2 xl:w-1/3 shadow shadow-gray-200"

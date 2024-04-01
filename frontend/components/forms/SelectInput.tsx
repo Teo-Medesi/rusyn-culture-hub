@@ -13,9 +13,11 @@ interface SelectInput {
   onChange: ChangeEventHandler;
   defaultValue?: string;
   value?: string;
+  className?: string;
 }
 
 const SelectInput = ({
+  className,
   value,
   name,
   placeholder,
@@ -24,7 +26,7 @@ const SelectInput = ({
   defaultValue,
 }: SelectInput) => {
   return (
-    <div>
+    <div className={className}>
       <label
         htmlFor={name.replaceAll(" ", "_").toLowerCase()}
         className="text-gray-700 mt-1 sm:mt-4 text-xs sm:text-md">
