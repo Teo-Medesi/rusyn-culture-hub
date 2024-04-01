@@ -49,7 +49,8 @@ const DesktopNavbar = ({ className }: { className: string }) => {
   return (
     <div className={`${className} navbar bg-base-100`}>
       <div className="flex-1">
-        <Link href="/" className=""><Image className="w-12 aspect-square" src={logo} alt="logo" /></Link>
+        <Link href="/" className=""><Image className="w-8 mr-2 aspect-square" src={logo} alt="logo" /></Link>
+        <p className='text-2xl font-bold'>Ruthenia</p>
         <ul className="menu menu-horizontal">
           <li>
             <Link href="/app/">Home</Link>
