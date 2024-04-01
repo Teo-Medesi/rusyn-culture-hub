@@ -57,12 +57,12 @@ const UserInfo = ({ user }: { user: User }) => {
               </p>
               <div className='flex flex-col lg:flex-row gap-4 justify-center'>
                 <Link href="/app/users/me/posts/create-new"
-                  className="btn-primary !uppercase font-normal btn mb-3 md:mb-0"
+                  className="btn-primary md:rounded-md !uppercase font-normal btn mb-3 md:mb-0"
                 >
                   new song post
                 </Link>
                 <Link href="/app/users/me/blogPosts/create-new"
-                  className="btn-primary btn-outline !uppercase font-normal btn"
+                  className="btn-primary md:rounded-md btn-outline !uppercase font-normal btn"
                 >
                   new blog post
                 </Link>

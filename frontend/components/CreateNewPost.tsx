@@ -90,7 +90,7 @@ const CreateNewPost = () => {
 
   return (
     <>
-      <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen shadow-lg shadow-shadowLight rounded-xl px-6">
+      <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen md:shadow-lg md:shadow-shadowLight rounded-xl px-5">
         <div className="mt-3  sm:mt-5">
           <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
             Create New Song Post
@@ -148,12 +148,12 @@ const CreateNewPost = () => {
             />
           </form>
         </div>
-        <div className="pb-4 justify-center flex-col items-end mt-2 sm:mt-8 flex">
-          <div className="flex gap-2 justify-center">
-            <button onClick={handlePost} className="btn btn-primary">
+        <div className="pb-4 justify-center flex-col items-end mt-8 flex">
+          <div className="flex w-full flex-col md:flex-row gap-4 justify-end">
+            <button className="w-full md:w-auto btn btn-outline !text-sm md:text-base md:rounded-md btn-primary !uppercase btn-outline">Save Draft</button>
+            <button onClick={handlePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md !uppercase btn-primary">
               Post
             </button>
-            <button className=" btn btn-accent btn-outline">Save Draft</button>
           </div>
         </div>
       </div>

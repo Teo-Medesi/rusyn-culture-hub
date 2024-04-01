@@ -15,7 +15,7 @@ interface TagsInput {
 
 const Tag = ({ text, onDelete }: { text: string, onDelete: MouseEventHandler }) => {
     return (
-        <div onClick={onDelete} className="badge badge-primary p-4 flex items-center justify-center gap-2 cursor-pointer">
+        <div onClick={onDelete} className="badge badge-primary badge-outline p-4 flex items-center justify-center gap-2 cursor-pointer">
             <p>{text}</p>
             <IoMdClose />
         </div>

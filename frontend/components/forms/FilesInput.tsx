@@ -44,7 +44,7 @@ const FilesInput = ({ name, onFilesChange, maxFileSize = 5 * 1024 * 1024 /* 5 MB
         onChange={handleFilesChange}
         type="file"
         multiple
-        className="file-input file-input-secondary file-input-bordered w-full mt-2"
+        className="file-input file-input-primary file-input-bordered w-full mt-2"
       />
     </>
   );

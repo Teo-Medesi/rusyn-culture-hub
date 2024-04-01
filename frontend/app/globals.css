@@ -11,7 +11,7 @@ input {
 }
 
 .btn-primary {
-  @apply text-white;
+  @apply text-white hover:!text-white;
 }
 
 .btn-md {
