@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useRef, useState } from 'react'
 import KnittingBear from "../public/bears/knitting-bear.png"
 import KnittingBear2 from "../public/bears/knitting-bear-2.png"
 import KnittingBear3 from "../public/bears/knitting-bear-3.png"
@@ -23,6 +23,8 @@ const Home = () => {
   const [email, setEmail] = useState<string>("");
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  const newsletterRef = useRef();
 
   const handleSubmit = async () => {
     try {
@@ -47,6 +49,12 @@ const Home = () => {
     }
   }
 
+  const scrollToNewsletter = () => {
+    if (newsletterRef.current) {
+      (newsletterRef.current as Element).scrollIntoView({behavior: "smooth"})
+    }
+  }
+
   return (
     <main className='flex flex-col'>
       <div className="h-[90vh] flex flex-col sm:items-center bg-base-100">
@@ -58,7 +66,7 @@ const Home = () => {
         <div className="px-5 lg:items-center flex flex-col h-[inherit] justify-center">
           <h1 className='text-5xl font-bold mt-5'>Discover Ruthenian Heritage </h1>
           <p className="mt-5">Learn about Ruthenian culture, music, and language.</p>
-          <button className="mt-5 btn btn-primary text-white w-full lg:w-1/2">Subscribe to Newsletter</button>
+          <button onClick={scrollToNewsletter} className="mt-5 btn btn-primary text-white w-full lg:w-1/2">Subscribe to Newsletter</button>
         </div>
       </div>
       <div className='min-h-screen h-max'>
@@ -112,7 +120,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='h-screen px-5 md:px-20 lg:px-5 bg-primary justify-center flex'>
+        <div ref={newsletterRef} className='h-screen px-5 md:px-20 lg:px-5 bg-primary justify-center flex'>
           {
             !isSubmitted ? (
               <div className='flex w-full lg:w-1/2 justify-center h-full flex-col '>
