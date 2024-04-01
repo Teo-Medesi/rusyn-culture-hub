@@ -29,6 +29,7 @@ const MobileNavbar = ({ className }: {className: string}) => {
           <Link onClick={toggleMenu} href="/app/blog" className="p-4 hover:bg-gray-100">Blog</Link>
           <Link onClick={toggleMenu} href="/app/about" className="p-4 hover:bg-gray-100">About</Link>
           <Link onClick={toggleMenu} href="/app/contact" className="p-4 hover:bg-gray-100">Contact</Link>
+          <Link onClick={toggleMenu} href="/app/users/me" className="p-4 hover:bg-gray-100">Profile</Link>
         </ul>
       </div>
     </div>

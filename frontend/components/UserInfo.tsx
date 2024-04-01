@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const UserInfo = ({ user }: { user: User }) => {
   return (
-    <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg shadow-shadowLight rounded-xl mt-16">
+    <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 md:shadow-lg md:shadow-shadowLight rounded-xl mt-16">
       <div className="px-6">
         <div className="flex flex-wrap justify-center">
           <div className="w-full flex justify-center">
@@ -15,30 +15,32 @@ const UserInfo = ({ user }: { user: User }) => {
               />
             </div>
           </div>
-          <div className="w-full text-center mt-20">
-            <div className="flex justify-center lg:pt-4 pt-8 pb-0">
-              <div className="p-3 text-center">
-                <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                  3,360
-                </span>
-                <span className="text-sm text-slate-400">Posts</span>
+          <div className="hidden w-full text-center mt-20">
+
+                <div className="flex justify-center lg:pt-4 pt-8 pb-0">
+                <div className="p-3 text-center">
+                  <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
+                    0
+                  </span>
+                  <span className="text-sm text-slate-400">Posts</span>
+                </div>
+                <div className="p-3 text-center">
+                  <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
+                    0
+                  </span>
+                  <span className="text-sm text-slate-400">Followers</span>
+                </div>
+                <div className="p-3 text-center">
+                  <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
+                    0
+                  </span>
+                  <span className="text-sm text-slate-400">Following</span>
+                </div>
               </div>
-              <div className="p-3 text-center">
-                <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                  2,454
-                </span>
-                <span className="text-sm text-slate-400">Followers</span>
-              </div>
-              <div className="p-3 text-center">
-                <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                  564
-                </span>
-                <span className="text-sm text-slate-400">Following</span>
-              </div>
-            </div>
+              
           </div>
         </div>
-        <div className="text-center mt-2">
+        <div className="text-center mt-20">
           <h3 className="text-xl lg:text-2xl text-slate-700 font-bold leading-normal mb-1">
             {user?.name || user.email}
           </h3>
@@ -53,16 +55,16 @@ const UserInfo = ({ user }: { user: User }) => {
               <p className="font-light leading-relaxed text-slate-600 mb-4">
                 {user?.description || "No description added."}
               </p>
-              <div className='flex flex-col lg:flex-row gap-2 justify-center'>
+              <div className='flex flex-col lg:flex-row gap-4 justify-center'>
                 <Link href="/app/users/me/posts/create-new"
-                  className="font-normal btn btn-primary"
+                  className="btn-primary !uppercase font-normal btn mb-3 md:mb-0"
                 >
-                  create new song post
+                  new song post
                 </Link>
                 <Link href="/app/users/me/blogPosts/create-new"
-                  className="font-normal btn btn-secondary"
+                  className="btn-primary btn-outline !uppercase font-normal btn"
                 >
-                  create new blog post
+                  new blog post
                 </Link>
               </div>
             </div>
