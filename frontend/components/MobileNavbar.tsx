@@ -12,7 +12,7 @@ const MobileNavbar = ({ className }: {className: string}) => {
 
   return (
     <div className={`fixed top-0 left-0 w-full bg-white shadow-md z-50 ${className}`}>
-      <div className="container mx-auto px-4 h-16 flex justify-between items-center">
+      <div className="container mx-auto px-4 h-full flex justify-between items-center">
         <p className='text-xl font-bold'>Ruthenia</p>
         <div className="menu-icon" onClick={toggleMenu}>
           {menuOpen ? (

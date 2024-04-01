@@ -54,7 +54,11 @@ const MarkdownInput = () => {
 
   return (
     <>
-      <div className="flex h-full overflow-x-hidden">
+      <div className='lg:hidden items-center flex-col h-[90vh] px-5 md:px-20 lg:px-5 bg-primary justify-center flex'>
+        <h1 className='lg:text-center mb-4 text-4xl font-bold  text-white'>Unavailable on Mobile!</h1>
+        <p className='text-white lg:text-center'>Please use a desktop computer or laptop in order to create blog posts!</p>
+      </div>
+      <div className="hidden lg:flex  h-full overflow-x-hidden">
         <div className="w-1/2 flex flex-col p-8">
           <div
             className={`fixed text-xl ml-8 mb-8 left-0 bottom-0 ${markdown.length < 500 || markdown.length > 20000
@@ -77,11 +81,11 @@ const MarkdownInput = () => {
         <div className="p-8 w-1/2 relative">
           <button
             onClick={() => setIsPreview((current) => !current)}
-            className="fixed btn btn-primary mr-8 mt-[10vh] right-0 top-0">
+            className="fixed btn btn-primary btn-alternative mr-8 mt-[10vh] right-0 top-0">
             {isPreview ? "Switch to Cheat Sheet" : "Switch to Preview"}
           </button>
 
-          <button onClick={handlePost} className={`fixed btn btn-primary mr-10 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) && "btn-disabled"}`}>
+          <button onClick={handlePost} className={`fixed btn btn-alternative btn-primary mr-10 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) && "btn-disabled"}`}>
             Post
           </button>
 
@@ -146,7 +150,8 @@ const MarkdownInput = () => {
         <Link href="/app" className="btn">
           GO TO HOME
         </Link>
-      </div></>
+      </div>
+    </>
   );
 };
 

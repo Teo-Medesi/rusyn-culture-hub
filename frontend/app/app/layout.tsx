@@ -8,7 +8,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <UserProvider>
       <main>
-        <MobileNavbar className='md:hidden' />
+        <MobileNavbar className='md:hidden h-[10vh]' />
         {/* MobileNavbar is fixed so this empty div is used for filling up that missing space */}
         <div className='h-[10vh] md:hidden'></div>
         

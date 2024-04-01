@@ -10,6 +10,10 @@ input {
   @apply rounded-full font-bold text-base lowercase;
 }
 
+.btn-alternative {
+  @apply !uppercase !rounded-md;
+}
+
 .btn-primary {
   @apply text-white hover:!text-white;
 }
