@@ -43,8 +43,8 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
   return (
     <tr
       onClick={handleClick}
-      className="hover:text-primary cursor-pointer border-b w-full last:border-b-0">
-      <td className="py-4 w-1/3 pl-0">
+      className="hover:bg-gray-50 cursor-pointer border-b w-full last:border-b-0">
+      <td className="py-4 w-full md:w-1/3 pl-0">
         <div className="flex items-center">
           <div className="flex flex-col justify-start ">
             <p className="mb-1 px-2 font-semibold transition-colors duration-100 ease-in-out text-lg/normal text-secondary-inverse text-inherit">
@@ -53,9 +53,9 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
           </div>
         </div>
       </td>
-      <td className="py-4 px-2 w-1/3 pr-0 text-start">
+      <td className="py-4 w-max px-2 md:w-1/3 pr-0 text-start">
         {region === "panonia" ? (
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-max md:w-auto">
             <img src={serbia.src} className="w-8 aspect-square" alt="flag" />
             <img src={croatia.src} className="w-8 aspect-square" alt="flag" />
           </div>
@@ -135,7 +135,7 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
                   <thead className="align-bottom">
                     <tr className="font-semibold text-[0.95rem] text-secondary-dark">
                       <th className="pb-3 text-start w-1/3">SONG TITLE</th>
-                      <th className="pb-3 text-start w-1/3">REGION</th>
+                      <th className="pb-3 text-end md:text-start w-1/3">REGION</th>
                       <th className="hidden md:block pb-3 text-start w-1/3">TAGS</th>
                     </tr>
                   </thead>

@@ -22,13 +22,13 @@ const MobileNavbar = ({ className }: {className: string}) => {
           )}
         </div>
       </div>
-      <div className={`absolute top-16 left-0 w-full bg-white shadow-md ${menuOpen ? 'block' : 'hidden'} transition-all duration-300 ease-in-out`}>
-        <ul className="flex flex-col py-2">
-          <Link onClick={toggleMenu} href="/app" className="px-4 py-2 transition-all duration-300 ease-in-out hover:bg-gray-100">Home</Link>
-          <Link onClick={toggleMenu} href="/app/discover" className="px-4 py-2 transition-all duration-300 ease-in-out hover:bg-gray-100">Discover</Link>
-          <Link onClick={toggleMenu} href="/app/blog" className="px-4 py-2 transition-all duration-300 ease-in-out hover:bg-gray-100">Blog</Link>
-          <Link onClick={toggleMenu} href="/app/about" className="px-4 py-2 transition-all duration-300 ease-in-out hover:bg-gray-100">About</Link>
-          <Link onClick={toggleMenu} href="/app/contact" className="px-4 py-2 transition-all duration-300 ease-in-out hover:bg-gray-100">Contact</Link>
+      <div className={`absolute top-16 left-0 w-full bg-white shadow-md ${menuOpen ? 'block' : 'hidden'}`}>
+        <ul className="flex flex-col">
+          <Link onClick={toggleMenu} href="/app" className="p-4 hover:bg-gray-100">Home</Link>
+          <Link onClick={toggleMenu} href="/app/discover" className="p-4 hover:bg-gray-100">Discover</Link>
+          <Link onClick={toggleMenu} href="/app/blog" className="p-4 hover:bg-gray-100">Blog</Link>
+          <Link onClick={toggleMenu} href="/app/about" className="p-4 hover:bg-gray-100">About</Link>
+          <Link onClick={toggleMenu} href="/app/contact" className="p-4 hover:bg-gray-100">Contact</Link>
         </ul>
       </div>
     </div>
