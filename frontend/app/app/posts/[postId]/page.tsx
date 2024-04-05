@@ -35,4 +35,9 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
               },
         }
     }
+    
+    return {
+        title: "Song Post - Ruthenia",
+        description: "Delve into the fascinating world of Rusyn music!"
+    }
 }
