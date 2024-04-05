@@ -201,7 +201,7 @@ const EditPost = ({ postId }: { postId: string }) => {
         </div>
         <div className="pb-4 justify-center flex-col items-end mt-8 flex">
           <div className="flex w-full flex-col md:flex-row gap-4 justify-end">
-            <button onDoubleClick={handleDeletePost} className="w-full md:w-auto btn btn-outline !text-sm md:text-base md:rounded-md btn-primary !uppercase btn-outline">Delete</button>
+            <button onDoubleClick={handleDeletePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md btn-primary !uppercase btn-outline">Delete</button>
             <button onClick={handlePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md !uppercase btn-primary">
               Save
             </button>

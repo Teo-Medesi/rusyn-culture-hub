@@ -24,7 +24,7 @@ const Home = () => {
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  const newsletterRef = useRef();
+  const newsletterRef = useRef(null);
 
   const handleSubmit = async () => {
     try {

@@ -25,7 +25,7 @@ const Tag = ({ text, onDelete }: { text: string, onDelete: MouseEventHandler }) 
 const TagsInput = ({ placeholder, name, tags, onNewTag, onTagDelete }: TagsInput) => {
   const [newTag, setNewTag] = useState<string>("");
 
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // instead of handling state logic in the TagsInput component, we will delegate to the parent element file using our own event handlers like OnNewTag() and onTagDelete()
   const onKeyDown = (event: KeyboardEvent) => {

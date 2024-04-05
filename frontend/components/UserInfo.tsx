@@ -10,7 +10,7 @@ const UserInfo = ({ user }: { user: User }) => {
   }
 
   return (
-    <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 md:shadow-lg md:shadow-shadowLight rounded-xl mt-16">
+    <div className="relative max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-6 md:shadow-lg md:shadow-shadowLight rounded-xl mt-16">
       <div className="px-6">
         <div className="flex flex-wrap justify-center">
           <div className="w-full flex justify-center">
@@ -53,18 +53,18 @@ const UserInfo = ({ user }: { user: User }) => {
         </div>
         <div className="text-center mt-20">
           <h3 className="text-xl lg:text-2xl text-slate-700 font-bold leading-normal mb-1">
-            {user?.name || user.email}
+            {user.email}
           </h3>
           <div className="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
             <i className="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75" />
-            {user?.location || "location unspecified"}
+            {"location unspecified"}
           </div>
         </div>
         <div className="mt-6 py-6 border-t border-slate-200 text-center">
           <div className="flex flex-wrap justify-center">
             <div className="w-full px-4">
               <p className="font-light leading-relaxed text-slate-600 mb-4">
-                {user?.description || "No description added."}
+                {"No description added."}
               </p>
               <div className='flex flex-col items-center gap-4 justify-center'>
                 <Link href="/app/users/me/posts/create-new"

@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image';
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { TextInput } from "../forms";
 import { createUserWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
 import { auth, provider } from "@/firebase.config"
@@ -33,8 +33,7 @@ const SignUp = ({ logo }: { logo: string }) => {
   }
 
   // TO-DO: Add Google Sign In with Redirect for Mobile Users! Pop Up is not Prefferable for Mobile!
-  const handleGoogleSignIn = (event: any) => {
-    event.preventDefault();
+  const handleGoogleSignIn = () => {
     router.prefetch("/app");
 
     signInWithPopup(auth, provider).then(() => {
@@ -53,8 +52,8 @@ const SignUp = ({ logo }: { logo: string }) => {
                 Sign Up
               </h1>
               <form className="" action="#">
-                <TextInput type='email' name='Email' placeholder="name@company.com" onChange={(e) => setEmail(e.target.value)} />
-                <TextInput type='password' name='Password' placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <TextInput type='email' name='Email' placeholder="name@company.com" onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} />
+                <TextInput type='password' name='Password' placeholder="Password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
 
                 {error && <p className="text-error italic">{error}</p>}
 
@@ -66,7 +65,7 @@ const SignUp = ({ logo }: { logo: string }) => {
                         aria-describedby="remember"
                         type="checkbox"
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
-                        required=""
+                       
                       />
                     </div>
                     <div className="ml-3 text-sm">
@@ -95,7 +94,7 @@ const SignUp = ({ logo }: { logo: string }) => {
                   </Link>
                 </p>
                 <div className='!h-[1px] bg-gray-500 mt-6 w-full'></div>
-                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={(event) => handleGoogleSignIn(event)} /></div>
+                <div className='mt-6 w-full flex justify-center'><GoogleButton onClick={() => handleGoogleSignIn()} /></div>
               </form>
             </div>
           </div>

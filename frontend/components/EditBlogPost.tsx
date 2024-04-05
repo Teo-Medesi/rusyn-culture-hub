@@ -291,7 +291,7 @@ const MarkdownCheatSheet = () => {
           </pre>
         </li>
         <li>
-          <strike>Strikethrough</strike>:{" "}
+          <s>Strikethrough</s>:{" "}
           <pre>
             {"~~"}Strikethrough Text{"~~"}
           </pre>
