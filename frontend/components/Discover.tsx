@@ -114,7 +114,7 @@ const Discover = () => {
                 <div className="w-full h-full px-5">
                     <SearchComponent
                         placeholder="Search songs..."
-                        className="w-full md:w-1/2 xl:w-1/3 shadow shadow-gray-200"
+                        className="w-full my-5 md:w-1/2 xl:w-1/3 shadow shadow-gray-200"
                         onChange={search => setFilter((prevState) => ({ ...prevState, keywords: search }))}
                     />
                     <SongTable posts={posts} />

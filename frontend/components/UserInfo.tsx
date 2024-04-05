@@ -2,47 +2,53 @@
 import { auth } from '@/firebase.config';
 import { signOut, User } from 'firebase/auth';
 import Link from 'next/link'
+import { FaCamera } from 'react-icons/fa';
 
 const UserInfo = ({ user }: { user: User }) => {
   const handleLogout = async () => {
     await signOut(auth);
   }
-  
+
   return (
     <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 md:shadow-lg md:shadow-shadowLight rounded-xl mt-16">
       <div className="px-6">
         <div className="flex flex-wrap justify-center">
           <div className="w-full flex justify-center">
             <div className="relative flex justify-center lg:block">
-              <img
-                src={user?.photoURL || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"}
-                className="shadow-xl rounded-full align-middle border-none lg:absolute lg:-m-16 md:ml-20 lg:-ml-16 max-w-[150px]"
-              />
+              {
+                user.photoURL ?
+                  <img
+                    src={user?.photoURL}
+                    className="shadow-xl rounded-full align-middle border-none lg:absolute lg:-m-16 md:ml-20 lg:-ml-16 max-w-[150px]"
+                  />
+                  :
+                  <div className="bg-gray-100 hover:bg-gray-200 transition duration-300 flex justify-center items-center cursor-pointer rounded-full align-middle border-none w-36 aspect-square"> <FaCamera className='w-12 h-12 text-gray-500' /></div>
+              }
             </div>
           </div>
           <div className="hidden w-full text-center mt-20">
 
-                <div className="flex justify-center lg:pt-4 pt-8 pb-0">
-                <div className="p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                    0
-                  </span>
-                  <span className="text-sm text-slate-400">Posts</span>
-                </div>
-                <div className="p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                    0
-                  </span>
-                  <span className="text-sm text-slate-400">Followers</span>
-                </div>
-                <div className="p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                    0
-                  </span>
-                  <span className="text-sm text-slate-400">Following</span>
-                </div>
+            <div className="flex justify-center lg:pt-4 pt-8 pb-0">
+              <div className="p-3 text-center">
+                <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
+                  0
+                </span>
+                <span className="text-sm text-slate-400">Posts</span>
               </div>
-              
+              <div className="p-3 text-center">
+                <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
+                  0
+                </span>
+                <span className="text-sm text-slate-400">Followers</span>
+              </div>
+              <div className="p-3 text-center">
+                <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
+                  0
+                </span>
+                <span className="text-sm text-slate-400">Following</span>
+              </div>
+            </div>
+
           </div>
         </div>
         <div className="text-center mt-20">
@@ -72,7 +78,7 @@ const UserInfo = ({ user }: { user: User }) => {
                   new blog post
                 </Link>
               </div>
-                <button onClick={handleLogout} className='btn btn-neutral !w-full md:!w-1/2  md:rounded-md md:hidden !uppercase mt-3 md:mt-0'>SIGN OUT</button>
+              <button onClick={handleLogout} className='btn btn-neutral !w-full md:!w-1/2  md:rounded-md md:hidden !uppercase mt-3 md:mt-0'>SIGN OUT</button>
             </div>
           </div>
         </div>

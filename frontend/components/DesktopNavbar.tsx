@@ -6,6 +6,7 @@ import Link from "next/link";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
+import { IoPersonSharp } from "react-icons/io5";
 
 const UserProfile = () => {
   const { user, isLoading } = useUser();
@@ -21,8 +22,15 @@ const UserProfile = () => {
     return (
       <>
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
-            <img alt="My Profile" src={user?.photoURL || "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Dwayne_Johnson_2014_%28cropped%29.jpg/800px-Dwayne_Johnson_2014_%28cropped%29.jpg"} />
+          <div className="w-12 rounded-full">
+          {
+                user.photoURL ?
+                  <img
+                    src={user?.photoURL}
+                  />
+                  :
+                  <div className="bg-gray-100 h-full flex justify-center items-center cursor-pointer rounded-full"> <IoPersonSharp className='w-4 h-4 text-gray-500' /></div>
+              }
           </div>
         </label>
         <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

@@ -47,7 +47,7 @@ const TableRow = ({ songTitle, region, tags, id }: Post) => {
       <td className="py-4 w-full md:w-1/3 pl-0">
         <div className="flex items-center">
           <div className="flex flex-col justify-start ">
-            <p className="mb-1 px-2 font-semibold transition-colors duration-100 ease-in-out text-lg/normal text-secondary-inverse text-inherit">
+            <p className="mb-1 px-2 font-medium transition-colors duration-100 ease-in-out text-lg/normal text-secondary-inverse text-inherit">
               {songTitle}
             </p>
           </div>
@@ -94,7 +94,7 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
           <div className="relative flex flex-col min-w-0 break-words md:border md:bg-clip-border rounded-2xl md:border-stone-200 bg-light/30">
             <div className="md:px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
               <h3 className="flex flex-col items-start justify-center md:m-2 ml-0 font-medium text-xl/tight text-dark">
-                <span className="mr-3 font-semibold text-dark">
+                <span className="mr-3 font-medium text-dark">
                   Ruthenian Song Lyrics
                 </span>
               </h3>
@@ -133,7 +133,7 @@ const SongTable = ({ posts }: { posts: Post[] }) => {
               <div className="overflow-x-auto">
                 <table className="w-full my-0 align-middle text-dark border-neutral-200">
                   <thead className="align-bottom">
-                    <tr className="font-semibold text-[0.95rem] text-secondary-dark">
+                    <tr className="font-medium text-[0.95rem] text-secondary-dark">
                       <th className="pb-3 text-start w-1/3">SONG TITLE</th>
                       <th className="pb-3 text-end md:text-start w-1/3">REGION</th>
                       <th className="hidden md:block pb-3 text-start w-1/3">TAGS</th>

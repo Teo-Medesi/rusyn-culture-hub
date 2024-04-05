@@ -47,7 +47,7 @@ const BlogPost = ({ blogId }: { blogId: string }) => {
         <div className="flex flex-col items-center w-full">
           <Markdown className="prose mb-12">{`# ${post.title}`}</Markdown>
           {post?.coverImage && <img className="w-full lg:w-1/2 aspect-video mb-12" src={post.coverImage} alt="Cover Image" />}
-          <Markdown className="prose mb-12 px-4 lg:px-0">{decodeMarkdownFromJSON(post.markdown)}</Markdown>
+          <Markdown className="prose overflow-x-hidden mb-12 px-4 lg:px-0">{decodeMarkdownFromJSON(post.markdown)}</Markdown>
         </div>
         <div
           role="alert"

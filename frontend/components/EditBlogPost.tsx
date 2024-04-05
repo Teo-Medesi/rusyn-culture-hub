@@ -103,7 +103,7 @@ const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
     }
   };
 
-  if (isPostLoading && isLoading) return <Loading />;
+  if (isPostLoading || isLoading) return <Loading />;
   else if (user?.uid != postUserId) return <Forbidden />
   else return (
       <>

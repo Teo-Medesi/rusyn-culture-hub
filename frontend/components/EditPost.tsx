@@ -134,7 +134,7 @@ const EditPost = ({ postId }: { postId: string }) => {
     }
   }
 
-  if (isPostLoading && isLoading) return <Loading />
+  if (isPostLoading || isLoading) return <Loading />
   else if (user?.uid != postUserId) return <Forbidden />
   else return (
     <>
