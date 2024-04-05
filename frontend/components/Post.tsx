@@ -5,6 +5,7 @@ import type { Post } from "@/types";
 import { cyrillicToLatin, isCyrillic as isCyrillicScript, latinToCyrillic } from "@/utils";
 import { User } from "firebase/auth";
 import { collection, doc, getDoc } from "firebase/firestore";
+import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
@@ -16,7 +17,7 @@ import Tag from "./Tag";
 export default function Post({ postId }: { postId: string }) {
   const [post, setPost] = useState<Post | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
+
   // convert from cyrillic to latin or vice-versa
   const [isSwitchToggled, setIsSwitchToggled] = useState<boolean>(false);
   const { user } = useUser();
@@ -53,6 +54,7 @@ export default function Post({ postId }: { postId: string }) {
           </div>
           <div className="flex min-h-screen lg:basis-1/3 flex-col items-center">
             <div className="flex flex-col items-center min-h-[110vh]">
+              <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn lg:hidden my-8 btn-alternative ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
               <h1 className="text-4xl mb-8 text-center lg:text-5xl">{isSwitchToggled ? cyrillicToLatin(post.songTitle) : post.songTitle}</h1>
               <p className="text-lg mb-24 lg:text-xl whitespace-pre ">{isSwitchToggled ? cyrillicToLatin(post.lyrics) : post.lyrics}</p>
             </div>
@@ -69,7 +71,7 @@ export default function Post({ postId }: { postId: string }) {
             </div>
           </div>
           <div className="p-4 lg:basis-1/3 flex justify-end">
-                <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn btn-alternative ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
+            <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn hidden lg:inline-flex btn-alternative ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
           </div>
         </div>
         <div
@@ -92,3 +94,4 @@ export default function Post({ postId }: { postId: string }) {
     return <NotFound />
   }
 }
+
