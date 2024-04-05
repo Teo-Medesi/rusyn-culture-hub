@@ -1,7 +1,7 @@
 "use client";
 import Markdown from "react-markdown";
 import { encodeMarkdownForJSON } from "@/utils";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, use, useEffect, useState } from "react";
 import { TextAreaInput, TextInput } from "./forms";
 import { useUser } from "@/context/UserContext";
 import { BlogPost } from "@/types";
@@ -9,6 +9,7 @@ import { addDoc, collection, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase.config";
 import Link from "next/link";
 import Loading from "./Loading";
+import Forbidden from "./Forbidden";
 
 const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
   const [markdown, setMarkdown] = useState<string>("");
@@ -16,6 +17,7 @@ const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
   const [title, setTitle] = useState<string>("");
   const [coverImage, setCoverImage] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [postUserId, setPostUserId] = useState<string>("");
 
   const [newPostId, setNewPostId] = useState<string>("");
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -40,7 +42,8 @@ const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
       console.log(post, blogPostId);
 
       if (post) {
-        console.log(post);
+        
+        setPostUserId(post.userId);
         setTitle(post.title);
         setCoverImage(post.coverImage);
         setMarkdown(post.markdown);
@@ -101,8 +104,8 @@ const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
   };
 
   if (isPostLoading && isLoading) return <Loading />;
-  else
-    return (
+  else if (user?.uid != postUserId) return <Forbidden />
+  else return (
       <>
         <div className='lg:hidden items-center flex-col h-[90vh] px-5 md:px-20 lg:px-5 bg-primary justify-center flex'>
           <h1 className='lg:text-center mb-4 text-4xl font-bold  text-white'>Unavailable on Mobile!</h1>

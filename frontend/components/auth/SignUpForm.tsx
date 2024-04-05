@@ -46,16 +46,7 @@ const SignUp = ({ logo }: { logo: string }) => {
     <div>
       <section className="bg-base-100">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-base-content"
-          >
-            <Image
-              className="w-12 h-12 mr-2"
-              src={logo}
-              alt="logo"
-            />
-          </a>
+          
           <div className="w-full bg-white rounded-lg shadow-sm border border-base-200 md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-base-content md:text-2xl">

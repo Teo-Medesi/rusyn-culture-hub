@@ -6,6 +6,7 @@ import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Forbidden from "./Forbidden";
 import {
   SelectInput,
   TextInput,
@@ -16,6 +17,7 @@ import {
 } from "./forms";
 import FilesInput from "./forms/FilesInput";
 import Loading from "./Loading";
+import NotFound from "./NotFound";
 
 const EditPost = ({ postId }: { postId: string }) => {
   const { user, isLoading } = useUser();
@@ -31,6 +33,7 @@ const EditPost = ({ postId }: { postId: string }) => {
   const [region, setRegion] = useState<string>("");
   const [lyrics, setLyrics] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const [postUserId, setPostUserId] = useState<string>("");
 
   const regionOptions: Option[] = [
     { value: "panonia", displayText: "Panonia (Croatia & Serbia)" },
@@ -69,10 +72,10 @@ const EditPost = ({ postId }: { postId: string }) => {
       const post = postSnapshot.data() as Post;
 
       if (post) {
-        console.log(post);
         setSongTitle(post.songTitle);
         setRegion(post.region);
         setLyrics(post.lyrics);
+        setPostUserId(post.userId);
 
         post.links && setLinks(post.links)
         post.files && setFiles(post.files);
@@ -132,6 +135,7 @@ const EditPost = ({ postId }: { postId: string }) => {
   }
 
   if (isPostLoading && isLoading) return <Loading />
+  else if (user?.uid != postUserId) return <Forbidden />
   else return (
     <>
       <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen md:shadow-lg md:shadow-shadowLight rounded-xl px-5">

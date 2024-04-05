@@ -69,7 +69,7 @@ export default function Post({ postId }: { postId: string }) {
             </div>
           </div>
           <div className="p-4 lg:basis-1/3 flex justify-end">
-                <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn lowercase ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
+                <div onClick={() => setIsSwitchToggled(prevState => !prevState)} className={`btn btn-alternative ${isSwitchToggled && "btn-primary"}`}>SWITCH TO {!isSwitchToggled ? "LATIN" : "CYRILLIC"} SCRIPT</div>
           </div>
         </div>
         <div

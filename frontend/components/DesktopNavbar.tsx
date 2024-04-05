@@ -38,7 +38,7 @@ const UserProfile = () => {
     )
   }
   else {
-    return <Link href="/auth/sign-in" tabIndex={0} className="btn btn-primary">SIGN IN</Link>
+    return <Link href="/auth/sign-in" tabIndex={0} className="btn btn-primary btn-alternative">SIGN IN</Link>
   }
 
 }

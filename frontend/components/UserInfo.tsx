@@ -1,8 +1,13 @@
 "use client";
-import { User } from 'firebase/auth';
+import { auth } from '@/firebase.config';
+import { signOut, User } from 'firebase/auth';
 import Link from 'next/link'
 
 const UserInfo = ({ user }: { user: User }) => {
+  const handleLogout = async () => {
+    await signOut(auth);
+  }
+  
   return (
     <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 md:shadow-lg md:shadow-shadowLight rounded-xl mt-16">
       <div className="px-6">
@@ -55,18 +60,19 @@ const UserInfo = ({ user }: { user: User }) => {
               <p className="font-light leading-relaxed text-slate-600 mb-4">
                 {user?.description || "No description added."}
               </p>
-              <div className='flex flex-col lg:flex-row gap-4 justify-center'>
+              <div className='flex flex-col items-center gap-4 justify-center'>
                 <Link href="/app/users/me/posts/create-new"
-                  className="btn-primary md:rounded-md !uppercase font-normal btn mb-3 md:mb-0"
+                  className="btn-primary w-full md:rounded-md md:!w-1/2  !uppercase font-normal btn mb-3 md:mb-0"
                 >
                   new song post
                 </Link>
                 <Link href="/app/users/me/blogPosts/create-new"
-                  className="btn-primary md:rounded-md btn-outline !uppercase font-normal btn"
+                  className="btn-primary w-full md:rounded-md md:!w-1/2  btn-outline mb-3 !uppercase font-normal btn"
                 >
                   new blog post
                 </Link>
               </div>
+                <button onClick={handleLogout} className='btn btn-neutral !w-full md:!w-1/2  md:rounded-md md:hidden !uppercase mt-3 md:mt-0'>SIGN OUT</button>
             </div>
           </div>
         </div>
