@@ -26,13 +26,18 @@ input {
   @apply !rounded-full !font-normal !text-sm !lowercase;
 }
 
-
 .btn-white {
   @apply text-gray2 bg-white;
-  box-shadow: 0 2px 4px 0 rgb(3,3,3, 0.1);
+  box-shadow: 0 2px 4px 0 rgb(3, 3, 3, 0.1);
 }
 
 .select {
   @apply outline-none;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+  }
+}

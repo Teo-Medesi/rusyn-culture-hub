@@ -23,14 +23,14 @@ const UserProfile = () => {
       <>
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
           <div className="w-12 rounded-full">
-          {
-                user.photoURL ?
-                  <img
-                    src={user?.photoURL}
-                  />
-                  :
-                  <div className="bg-gray-100 h-full flex justify-center items-center cursor-pointer rounded-full"> <IoPersonSharp className='w-4 h-4 text-gray-500' /></div>
-              }
+            {
+              user.photoURL ?
+                <img
+                  src={user?.photoURL}
+                />
+                :
+                <div className="bg-gray-100 h-full flex justify-center items-center cursor-pointer rounded-full"> <IoPersonSharp className='w-4 h-4 text-gray-500' /></div>
+            }
           </div>
         </label>
         <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -79,9 +79,6 @@ const DesktopNavbar = ({ className }: { className: string }) => {
         </ul>
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
-          <input type="text" placeholder="Search" className="input hidden lg:block input-bordered w-24 md:w-auto" />
-        </div>
         <div className="dropdown dropdown-end">
           <UserProfile />
         </div>
