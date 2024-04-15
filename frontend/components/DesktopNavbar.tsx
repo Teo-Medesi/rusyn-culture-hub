@@ -64,7 +64,7 @@ const DesktopNavbar = ({ className }: { className: string }) => {
             <Link href="/app/">Home</Link>
           </li>
           <li>
-            <Link href="/app/discover">Discover</Link>
+            <Link href="/app/songs">Songs</Link>
           </li>
           <li>
             <Link href="/app/blog">Blog</Link>

@@ -42,7 +42,7 @@ const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
       console.log(post, blogPostId);
 
       if (post) {
-        
+
         setPostUserId(post.userId);
         setTitle(post.title);
         setCoverImage(post.coverImage);
@@ -106,170 +106,170 @@ const EditBlogPost = ({ blogPostId }: { blogPostId: string }) => {
   if (isPostLoading || isLoading) return <Loading />;
   else if (user?.uid != postUserId) return <Forbidden />
   else return (
-      <>
-        <div className='lg:hidden items-center flex-col h-[90vh] px-5 md:px-20 lg:px-5 bg-primary justify-center flex'>
-          <h1 className='lg:text-center mb-4 text-4xl font-bold  text-white'>Unavailable on Mobile!</h1>
-          <p className='text-white lg:text-center'>Please use a desktop computer or laptop in order to edit blog posts!</p>
+    <>
+      <div className='lg:hidden items-center flex-col h-[90vh] px-5 md:px-20 lg:px-5 bg-primary justify-center flex'>
+        <h1 className='lg:text-center mb-4 text-4xl font-bold  text-white'>Unavailable on Mobile!</h1>
+        <p className='text-white lg:text-center'>Please use a desktop computer or laptop in order to edit blog posts!</p>
+      </div>
+      <div className="hidden lg:flex h-full overflow-x-hidden">
+        <div className="w-1/2 flex flex-col p-8">
+          <div
+            className={`fixed text-xl ml-8 mb-8 left-0 bottom-0 ${markdown.length < 500 || markdown.length > 20000
+              ? "text-red-500"
+              : "text-green-500"
+              }`}>
+            {markdown.length}
+          </div>
+          <TextInput
+            value={title}
+            className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none"
+            name="Title"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.target.value)
+            }
+          />
+          <TextInput
+            value={coverImage}
+            placeholder="https://"
+            className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none"
+            name="Cover Image ( URL )"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setCoverImage(e.target.value)
+            }
+          />
+          <TextAreaInput
+            value={description}
+            placeholder="Meta descriptions improve SEO ratings and makes it easier for people to find your post!"
+            className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none"
+            name="Description (Optional) -> displayed as a meta description tag in google search listings"
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              setDescription(e.target.value)
+            }
+          />
+          <textarea
+            value={markdown}
+            onChange={(e) => setMarkdown(e.target.value)}
+            placeholder="Start writing your markdown here!"
+            name="markdown"
+            className="w-full h-full outline-none"
+          />
         </div>
-        <div className="hidden lg:flex h-full overflow-x-hidden">
-          <div className="w-1/2 flex flex-col p-8">
-            <div
-              className={`fixed text-xl ml-8 mb-8 left-0 bottom-0 ${markdown.length < 500 || markdown.length > 20000
-                ? "text-red-500"
-                : "text-green-500"
-                }`}>
-              {markdown.length}
+        <div className="divider divider-horizontal "></div>
+        <div className="p-8 w-1/2 relative">
+          <button
+            onClick={() => setIsPreview((current) => !current)}
+            className="fixed btn btn-alternative btn-primary mr-8 mt-[10vh] right-0 top-0">
+            {isPreview ? "Switch to Cheat Sheet" : "Switch to Preview"}
+          </button>
+
+          <button
+            onClick={handlePost}
+            className={`fixed btn btn-alternative btn-primary mr-10 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) &&
+              "btn-disabled"
+              }`}>
+            Save
+          </button>
+
+          <button
+            onDoubleClick={handleDeletePost}
+            className={`fixed btn btn-alternative btn-primary+ btn-outline mr-32 mb-4 right-0 bottom-0`}>
+            Delete
+          </button>
+
+          {isPreview ? (
+            <div className="flex flex-col">
+              <Markdown className="prose mb-12">{`# ${title}`}</Markdown>
+              {coverImage && (
+                <img
+                  className="w-full aspect-video mb-12"
+                  src={coverImage}
+                  alt="Cover Image"
+                />
+              )}
+              <Markdown className="prose mb-12 px-4 lg:px-0">
+                {markdown}
+              </Markdown>
             </div>
-            <TextInput
-              value={title}
-              className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none"
-              name="Title"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setTitle(e.target.value)
-              }
-            />
-            <TextInput
-              value={coverImage}
-              placeholder="https://"
-              className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none"
-              name="Cover Image ( URL )"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setCoverImage(e.target.value)
-              }
-            />
-            <TextAreaInput
-              value={description}
-              placeholder="Meta descriptions improve SEO ratings and makes it easier for people to find your post!"
-              className="mb-8 border-t-0 border-x-0 rounded-none !border-b !outline-none"
-              name="Description (Optional) -> displayed as a meta description tag in google search listings"
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                setDescription(e.target.value)
-              }
-            />
-            <textarea
-              value={markdown}
-              onChange={(e) => setMarkdown(e.target.value)}
-              placeholder="Start writing your markdown here!"
-              name="markdown"
-              className="w-full h-full outline-none"
-            />
-          </div>
-          <div className="divider divider-horizontal "></div>
-          <div className="p-8 w-1/2 relative">
-            <button
-              onClick={() => setIsPreview((current) => !current)}
-              className="fixed btn btn-alternative btn-primary mr-8 mt-[10vh] right-0 top-0">
-              {isPreview ? "Switch to Cheat Sheet" : "Switch to Preview"}
-            </button>
-
-            <button
-              onClick={handlePost}
-              className={`fixed btn btn-alternative btn-primary mr-10 mb-4 right-0 bottom-0 ${(markdown.length < 500 || markdown.length > 20000 || !title) &&
-                "btn-disabled"
-                }`}>
-              Save
-            </button>
-
-            <button
-              onDoubleClick={handleDeletePost}
-              className={`fixed btn btn-alternative btn-primary+ btn-outline mr-32 mb-4 right-0 bottom-0`}>
-              Delete
-            </button>
-
-            {isPreview ? (
-              <div className="flex flex-col">
-                <Markdown className="prose mb-12">{`# ${title}`}</Markdown>
-                {coverImage && (
-                  <img
-                    className="w-full aspect-video mb-12"
-                    src={coverImage}
-                    alt="Cover Image"
-                  />
-                )}
-                <Markdown className="prose mb-12 px-4 lg:px-0">
-                  {markdown}
-                </Markdown>
-              </div>
-            ) : (
-              <p className="mb-12 px-4 lg:px-0">
-                <MarkdownCheatSheet />
-              </p>
-            )}
-          </div>
-        </div>
-        <div
-          role="alert"
-          className={`alert z-10 flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}>
-          <div className="flex gap-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="stroke-current shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span>Post successfully updated!</span>
-          </div>
-          <Link href={`/app/blog/posts/${newPostId}`} className="btn">
-            GO TO POST
-          </Link>
-        </div>
-        <div
-          role="alert"
-          className={`alert z-10 alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${error ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}>
-          <div className="flex gap-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="stroke-current shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <p>
-              Couldn't update post! <span className="ml-4 italic">{error}</span>
+          ) : (
+            <p className="mb-12 px-4 lg:px-0">
+              <MarkdownCheatSheet />
             </p>
-          </div>
-          <Link href="/app/blog" className="btn">
-            GO TO BLOG
-          </Link>
+          )}
         </div>
-        <div
-          role="alert"
-          className={`alert alert-warning flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${isDeleted ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}>
-          <div className="flex gap-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="stroke-current shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <p>Post successfully deleted!</p>
-          </div>
-          <Link href="/app/blog" className="btn">
-            GO TO BLOG
-          </Link>
+      </div>
+      <div
+        role="alert"
+        className={`alert z-10 flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+        <div className="flex gap-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Post successfully updated!</span>
         </div>
-      </>
-    );
+        <Link href={`/app/blog/posts/${newPostId}`} className="btn btn-alternative">
+          GO TO POST
+        </Link>
+      </div>
+      <div
+        role="alert"
+        className={`alert z-10 alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${error ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+        <div className="flex gap-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <p>
+            Couldn't update post! <span className="ml-4 italic">{error}</span>
+          </p>
+        </div>
+        <Link href="/app/blog" className="btn btn-alternative">
+          GO TO BLOG
+        </Link>
+      </div>
+      <div
+        role="alert"
+        className={`alert alert-warning flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${isDeleted ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+        <div className="flex gap-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <p>Post successfully deleted!</p>
+        </div>
+        <Link href="/app/blog" className="btn btn-alternative">
+          GO TO BLOG
+        </Link>
+      </div>
+    </>
+  );
 };
 
 const MarkdownCheatSheet = () => {

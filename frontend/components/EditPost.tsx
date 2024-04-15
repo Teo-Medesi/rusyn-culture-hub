@@ -52,15 +52,15 @@ const EditPost = ({ postId }: { postId: string }) => {
 
   const handleFiles = (files: File[]) => {
     const imageFiles = files.filter(file => file.type.startsWith('image/'));
-    
+
     if (imageFiles.length === 0) {
-        // No image files uploaded
-        setIsFileError(true);
+      // No image files uploaded
+      setIsFileError(true);
     } else {
-        // At least one image file uploaded
-        setIsFileError(false);
-        console.log('Image files uploaded:', imageFiles);
-        setFiles(imageFiles);
+      // At least one image file uploaded
+      setIsFileError(false);
+      console.log('Image files uploaded:', imageFiles);
+      setFiles(imageFiles);
     }
   }
 
@@ -138,7 +138,7 @@ const EditPost = ({ postId }: { postId: string }) => {
   else if (user?.uid != postUserId) return <Forbidden />
   else return (
     <>
-      <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen md:shadow-lg md:shadow-shadowLight rounded-xl px-5">
+      <div className="max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-5 rounded-xl px-5">
         <div className="mt-3  sm:mt-5">
           <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
             Edit Post
@@ -197,15 +197,15 @@ const EditPost = ({ postId }: { postId: string }) => {
                 setTags(tags.filter((element) => element != tag))
               }
             />
+            <div className="pb-4 justify-center flex-col items-end mt-8 flex">
+              <div className="flex w-full flex-col md:flex-row gap-4 justify-end">
+                <button onDoubleClick={handleDeletePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md btn-primary !uppercase btn-outline">Delete</button>
+                <button onClick={handlePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md !uppercase btn-primary">
+                  Save
+                </button>
+              </div>
+            </div>
           </form>
-        </div>
-        <div className="pb-4 justify-center flex-col items-end mt-8 flex">
-          <div className="flex w-full flex-col md:flex-row gap-4 justify-end">
-            <button onDoubleClick={handleDeletePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md btn-primary !uppercase btn-outline">Delete</button>
-            <button onClick={handlePost} className="w-full md:w-auto btn !text-sm md:text-base md:rounded-md !uppercase btn-primary">
-              Save
-            </button>
-          </div>
         </div>
       </div>
       <div
@@ -227,7 +227,7 @@ const EditPost = ({ postId }: { postId: string }) => {
           </svg>
           <span>Post successfully updated!</span>
         </div>
-        <Link href={`/app/posts/${postId}`} className="btn">
+        <Link href={`/app/posts/${postId}`} className="btn btn-alternative">
           GO TO POST
         </Link>
       </div>
@@ -252,7 +252,7 @@ const EditPost = ({ postId }: { postId: string }) => {
             Couldn't update post! <span className="ml-4 italic">{error}</span>
           </p>
         </div>
-        <Link href="/app" className="btn">
+        <Link href="/app" className="btn btn-alternative">
           GO TO HOME
         </Link>
       </div>
@@ -261,12 +261,12 @@ const EditPost = ({ postId }: { postId: string }) => {
         className={`alert alert-warning flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${isDeleted ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}>
         <div className="flex gap-4">
-        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
           <p>
             Post successfully deleted!
           </p>
         </div>
-        <Link href="/app" className="btn">
+        <Link href="/app" className="btn btn-alternative">
           GO TO HOME
         </Link>
       </div>

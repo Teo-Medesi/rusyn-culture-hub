@@ -43,15 +43,15 @@ const CreateNewPost = () => {
 
   const handleFiles = (files: File[]) => {
     const imageFiles = files.filter(file => file.type.startsWith('image/'));
-    
+
     if (imageFiles.length === 0) {
-        // No image files uploaded
-        setIsFileError(true);
+      // No image files uploaded
+      setIsFileError(true);
     } else {
-        // At least one image file uploaded
-        setIsFileError(false);
-        console.log('Image files uploaded:', imageFiles);
-        setFiles(imageFiles);
+      // At least one image file uploaded
+      setIsFileError(false);
+      console.log('Image files uploaded:', imageFiles);
+      setFiles(imageFiles);
     }
   }
 
@@ -66,7 +66,7 @@ const CreateNewPost = () => {
           lyrics,
           links,
           tags,
-          userId: user.uid, 
+          userId: user.uid,
         };
 
         // TO-DO USE FIREBASE STORAGE TO UPLOAD IMAGE FILES
@@ -90,7 +90,7 @@ const CreateNewPost = () => {
 
   return (
     <>
-      <div className="max-w-md xl:overflow-y-hidden mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen md:shadow-lg md:shadow-shadowLight rounded-xl px-5">
+      <div className="max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full max-h-screen rounded-xl px-5">
         <div className="mt-3  sm:mt-5">
           <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
             Create New Song Post
@@ -159,9 +159,8 @@ const CreateNewPost = () => {
       </div>
       <div
         role="alert"
-        className={`alert flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${
-          isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}>
+        className={`alert flex justify-between fixed left-0 bottom-0 alert-success rounded-none transition duration-500 ease-in-out ${isSuccess ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
         <div className="flex gap-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -183,9 +182,8 @@ const CreateNewPost = () => {
       </div>
       <div
         role="alert"
-        className={`alert alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${
-          error ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}>
+        className={`alert alert-error flex justify-between fixed left-0 bottom-0 rounded-none transition duration-500 ease-in-out ${error ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
         <div className="flex gap-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
