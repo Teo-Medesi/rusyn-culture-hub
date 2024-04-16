@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { IoMdMenu, IoMdClose } from 'react-icons/io';
 
-const MobileNavbar = ({ className }: {className: string}) => {
+const MobileNavbar = ({ className }: { className: string }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const toggleMenu = () => {
@@ -25,7 +25,7 @@ const MobileNavbar = ({ className }: {className: string}) => {
       <div className={`absolute top-16 left-0 w-full bg-white shadow-md ${menuOpen ? 'block' : 'hidden'}`}>
         <ul className="flex flex-col">
           <Link onClick={toggleMenu} href="/app" className="p-4 hover:bg-gray-100">Home</Link>
-          <Link onClick={toggleMenu} href="/app/discover" className="p-4 hover:bg-gray-100">Discover</Link>
+          <Link onClick={toggleMenu} href="/app/songs" className="p-4 hover:bg-gray-100">Songs</Link>
           <Link onClick={toggleMenu} href="/app/blog" className="p-4 hover:bg-gray-100">Blog</Link>
           <Link onClick={toggleMenu} href="/app/about" className="p-4 hover:bg-gray-100">About</Link>
           <Link onClick={toggleMenu} href="/app/contact" className="p-4 hover:bg-gray-100">Contact</Link>
