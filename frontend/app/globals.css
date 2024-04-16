@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: only light;
+}
+
 input {
   outline: none;
 }
